@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "start": "deno run -A --watch=static --no-check main.ts & deno eval --no-check 'import \"$fresh/cli.ts\"' -- manifest --watch"
+  },
+  "importMap": "./import_map.json"
+}
