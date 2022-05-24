@@ -2,6 +2,8 @@
 
 ### Usage
 
+Set up Shopify credentials in the `.env`.
+
 Start the project:
 
 ```
