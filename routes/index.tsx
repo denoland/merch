@@ -33,7 +33,7 @@ export const handler: Handlers = {
 
 export default function Home({ data }: PageProps) {
   return (
-    <>
+    <div>
       <NavBar />
       <ul class={tw`text-xl px-4 sm:px-8 py-6`}>
         {data.products.edges.map(({ node }) => (
@@ -58,6 +58,6 @@ export default function Home({ data }: PageProps) {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }

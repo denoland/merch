@@ -3,7 +3,7 @@
     "@/": "./",
     "twind": "./utils/twind.ts",
 
-    "$fresh/": "https://raw.githubusercontent.com/lucacasonato/fresh/80598d07fd4eed735ea7ee3eb9728d7f5c9b3aa4/",
+    "$fresh/": "https://raw.githubusercontent.com/lucacasonato/fresh/458fe2ca3c12508a60cb304bd0f17e1087f553f1/",
     "$twind": "https://esm.sh/twind@0.16.16",
     "$twind/": "https://esm.sh/twind@0.16.16/",
     "$std/": "https://deno.land/std@0.140.0/"
