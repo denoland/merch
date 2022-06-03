@@ -3,7 +3,7 @@
 import { Fragment, h, PageProps } from "$fresh/runtime.ts";
 import { Handlers } from "$fresh/server.ts";
 import { tw } from "twind";
-import { query } from "@/utils/shopify.ts";
+import { graphql } from "@/utils/shopify.ts";
 import { NavBar } from "@/components/NavBar.tsx";
 
 const q = `query ($product: String!) {
@@ -23,7 +23,7 @@ const q = `query ($product: String!) {
 
 export const handler: Handlers = {
   async GET(req, ctx) {
-    const data = await query(q, { product: ctx.params.product });
+    const data = await graphql(q, { product: ctx.params.product });
     return ctx.render(data);
   },
 };

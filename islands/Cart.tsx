@@ -3,6 +3,8 @@
 import { Fragment, h, IS_BROWSER, useRef } from "$fresh/runtime.ts";
 import { apply, tw } from "$twind";
 import { animation, css } from "$twind/css";
+import useSWR from "$swr";
+import { graphql } from "@/utils/shopify.ts";
 
 // Lazy load a <dialog> polyfill.
 // @ts-expect-error HTMLDialogElement is not just a type!
@@ -35,7 +37,84 @@ const backdrop = css({
   },
 });
 
+interface CartData {
+  id: string;
+  lines: {
+    edges: {
+      node: {
+        id: string;
+        quantity: number;
+        merchandise: {
+          title: string;
+        };
+        estimatedCost: {
+          totalAmount: {
+            amount: number;
+            currencyCode: string;
+          };
+        };
+      };
+    }[];
+  };
+  estimatedCost: {
+    totalAmount: {
+      amount: number;
+      currencyCode: string;
+    };
+  };
+}
+
+const CART_QUERY = `{
+  id
+  lines(first: 100) {
+    edges {
+      node {
+        id
+        quantity
+        merchandise {
+          ...on ProductVariant {
+            title
+          }
+        }
+        estimatedCost {
+          totalAmount {
+            amount
+            currencyCode
+          }
+        }
+      }
+    }
+  }
+  estimatedCost {
+    totalAmount {
+      amount
+      currencyCode
+    }
+  }
+}`;
+
+async function cartFetcher(): Promise<CartData> {
+  const id = localStorage.getItem("cartId");
+  if (id === null) {
+    const { cartCreate } = await graphql(
+      `mutation { cartCreate { cart ${CART_QUERY} } }`,
+    );
+    localStorage.setItem("cartId", cartCreate.cart.id);
+    return cartCreate.cart;
+  }
+
+  const { cart } = await graphql(
+    `query($id: ID!) { cart(id: $id) ${CART_QUERY} }`,
+    { id },
+  );
+
+  return cart;
+}
+
 export default function Cart() {
+  const { data, error } = useSWR<CartData, Error>("cart", cartFetcher, {});
+  console.log(data, error);
+
   const ref = useRef<HTMLDialogElement | null>(null);
 
   const onDialogClick = (e: MouseEvent) => {
@@ -46,20 +125,22 @@ export default function Cart() {
 
   return (
     <div>
-      <button onClick={() => ref.current!.showModal()}>Cart</button>
+      <button onClick={() => ref.current!.showModal()}>
+        Cart ({data?.lines.edges.length})
+      </button>
       <dialog
         ref={ref}
         class={tw
           `bg-transparent p-0 m-0 pt-[50%] sm:pt-0 sm:ml-auto max-w-full sm:max-w-lg w-full max-h-full h-full ${slideBottom} sm:${slideRight} ${backdrop}`}
         onClick={onDialogClick}
       >
-        <CartInner />
+        <CartInner cart={data} />
       </dialog>
     </div>
   );
 }
 
-function CartInner() {
+function CartInner(props: { cart: CartData | undefined }) {
   const corners = apply`rounded(tl-2xl tr-2xl sm:(tr-none bl-2xl))`;
   const card = tw
     `py-8 px-6 h-full bg-white ${corners} flex flex-col justify-between`;
@@ -83,17 +164,42 @@ function CartInner() {
           </svg>
         </button>
       </div>
-
-      <div class={tw`flex-grow-1 my-4`}>
-        <p class={tw`text-gray-700`}>There are no items in the cart.</p>
-      </div>
-      <button
+      {props.cart && (
+        <div class={tw`flex-grow-1 my-4`}>
+          {props.cart.lines.edges.length === 0
+            ? <p class={tw`text-gray-700`}>There are no items in the cart.</p>
+            : (
+              <ul>
+                {props.cart.lines.edges.map((line) => (
+                  <li>
+                    {line.node.merchandise.title} x{line.node.quantity}{" "}
+                    ({formatCurrency(line.node.estimatedCost.totalAmount)})
+                  </li>
+                ))}
+              </ul>
+            )}
+        </div>
+      )}
+      {props.cart && (
+        <div class={tw`my-4`}>
+          TOTAL: {formatCurrency(props.cart.estimatedCost.totalAmount)}
+        </div>
+      )}
+      <a
         class={tw
-          `p-2 border border-gray-200 rounded-xl bg-gray-50 text-gray-500 cursor-default`}
+          `block p-2 border border-gray-200 rounded-xl bg-gray-50 text-gray-500 cursor-default`}
         disabled
       >
         Checkout
-      </button>
+      </a>
     </div>
   );
+}
+
+function formatCurrency(amount: { amount: number; currencyCode: string }) {
+  const intl = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: amount.currencyCode,
+  });
+  return intl.format(amount.amount);
 }

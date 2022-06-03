@@ -1,6 +1,7 @@
-import { SHOPIFY_ACCESS_TOKEN, SHOPIFY_SHOP } from "./config.ts";
+const SHOPIFY_SHOP = "deno-merch.myshopify.com";
+const SHOPIFY_ACCESS_TOKEN = "235190bee2a33cb4da0897edb6e954de";
 
-export async function query<T>(
+export async function graphql<T>(
   query: string,
   variables: Record<string, any> = {},
 ): Promise<T> {
