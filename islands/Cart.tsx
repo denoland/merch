@@ -1,10 +1,8 @@
 /** @jsx h */
-/** @jsxFrag Fragment */
-import { Fragment, h, IS_BROWSER, useRef } from "$fresh/runtime.ts";
+import { h, IS_BROWSER, useRef } from "$fresh/runtime.ts";
 import { apply, tw } from "$twind";
 import { animation, css } from "$twind/css";
-import useSWR from "$swr";
-import { graphql } from "@/utils/shopify.ts";
+import { useCart } from "@/utils/data.ts";
 
 // Lazy load a <dialog> polyfill.
 // @ts-expect-error HTMLDialogElement is not just a type!
@@ -37,83 +35,8 @@ const backdrop = css({
   },
 });
 
-interface CartData {
-  id: string;
-  lines: {
-    edges: {
-      node: {
-        id: string;
-        quantity: number;
-        merchandise: {
-          title: string;
-        };
-        estimatedCost: {
-          totalAmount: {
-            amount: number;
-            currencyCode: string;
-          };
-        };
-      };
-    }[];
-  };
-  estimatedCost: {
-    totalAmount: {
-      amount: number;
-      currencyCode: string;
-    };
-  };
-}
-
-const CART_QUERY = `{
-  id
-  lines(first: 100) {
-    edges {
-      node {
-        id
-        quantity
-        merchandise {
-          ...on ProductVariant {
-            title
-          }
-        }
-        estimatedCost {
-          totalAmount {
-            amount
-            currencyCode
-          }
-        }
-      }
-    }
-  }
-  estimatedCost {
-    totalAmount {
-      amount
-      currencyCode
-    }
-  }
-}`;
-
-async function cartFetcher(): Promise<CartData> {
-  const id = localStorage.getItem("cartId");
-  if (id === null) {
-    const { cartCreate } = await graphql(
-      `mutation { cartCreate { cart ${CART_QUERY} } }`,
-    );
-    localStorage.setItem("cartId", cartCreate.cart.id);
-    return cartCreate.cart;
-  }
-
-  const { cart } = await graphql(
-    `query($id: ID!) { cart(id: $id) ${CART_QUERY} }`,
-    { id },
-  );
-
-  return cart;
-}
-
 export default function Cart() {
-  const { data, error } = useSWR<CartData, Error>("cart", cartFetcher, {});
-  console.log(data, error);
+  const { data, error } = useCart();
 
   const ref = useRef<HTMLDialogElement | null>(null);
 
@@ -172,7 +95,8 @@ function CartInner(props: { cart: CartData | undefined }) {
               <ul>
                 {props.cart.lines.edges.map((line) => (
                   <li>
-                    {line.node.merchandise.title} x{line.node.quantity}{" "}
+                    {line.node.merchandise.product.title} x{line.node.quantity}
+                    {" "}
                     ({formatCurrency(line.node.estimatedCost.totalAmount)})
                   </li>
                 ))}

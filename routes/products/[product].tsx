@@ -5,12 +5,21 @@ import { Handlers } from "$fresh/server.ts";
 import { tw } from "twind";
 import { graphql } from "@/utils/shopify.ts";
 import { NavBar } from "@/components/NavBar.tsx";
+import AddToCart from "@/islands/AddToCart.tsx";
 
 const q = `query ($product: String!) {
   product(handle: $product) {
     title
     description
     # TODO: use 'descriptionHtml' instead of 'description'
+
+    variants(first: 10) {
+      edges {
+        node {
+          id
+        }
+      }
+    }
 
     featuredImage {
       url
@@ -29,6 +38,7 @@ export const handler: Handlers = {
 };
 
 export default function Home({ data }: PageProps) {
+  console.log("data", data.product.variants);
   return (
     <>
       <NavBar />
@@ -44,6 +54,7 @@ export default function Home({ data }: PageProps) {
             class={tw`mt-4 w-32`}
           />
         )}
+        <AddToCart id={data.product.variants.edges[0].node.id} />
       </div>
     </>
   );
