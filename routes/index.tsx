@@ -37,7 +37,7 @@ export default function Home({ data }: PageProps) {
       <NavBar />
       <div
         class={tw
-          `max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8`}
+          `max-w-2xl mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:max-w-7xl lg:px-8`}
       >
         <h2 class={tw`sr-only`}>Products</h2>
 
