@@ -71,9 +71,12 @@ export default function Cart() {
           class={tw
             `block absolute top-0 right-0 h-4 w-4 transform -translate-y-1/2 translate-x-1/2 rounded-full bg-red-500 flex`}
         >
-          <span class={tw`place-self-center flex-1 text-white text-[0.6rem]`}>
+          <div
+            class={tw
+              `h-4 w-4 text-center align-middle text-white text-[0.6rem]`}
+          >
             {data?.lines.edges.length}
-          </span>
+          </div>
         </div>
       </button>
       <dialog

@@ -2,7 +2,7 @@
 /** @jsxFrag Fragment */
 import { h } from "$fresh/runtime.ts";
 import { addToCart, useCart } from "@/utils/data.ts";
-import { graphql } from "@/utils/shopify.ts";
+import { tw } from "twind";
 
 interface AddToCartProps {
   id: string;
@@ -18,8 +18,13 @@ export default function AddToCart(props: AddToCartProps) {
   };
 
   return (
-    <button onClick={add} disabled={!data}>
-      Add to Cart
+    <button
+      onClick={add}
+      disabled={!data}
+      class={tw
+        `w-full bg-gray-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-50`}
+    >
+      Add to cart
     </button>
   );
 }
