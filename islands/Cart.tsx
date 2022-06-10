@@ -73,7 +73,7 @@ export default function Cart() {
         >
           <div
             class={tw
-              `h-4 w-4 text-center align-middle text-white text-[0.6rem]`}
+              `h-4 w-4 text-center align-middle text-white text-[0.6rem] leading-4`}
           >
             {data?.lines.edges.length}
           </div>
