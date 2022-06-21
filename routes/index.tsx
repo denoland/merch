@@ -3,6 +3,7 @@
 import { Fragment, h, PageProps } from "$fresh/runtime.ts";
 import { Handlers } from "$fresh/server.ts";
 import { tw } from "twind";
+import { formatCurrency } from "@/utils/data.ts";
 import { graphql } from "@/utils/shopify.ts";
 import { NavBar } from "@/components/NavBar.tsx";
 
@@ -18,6 +19,16 @@ const q = `{
           width
           height
           altText
+        }
+        priceRange {
+          minVariantPrice {
+            amount
+            currencyCode
+          }
+          maxVariantPrice {
+            amount
+            currencyCode
+          }
         }
       }
     }
@@ -65,7 +76,9 @@ export default function Home({ data }: PageProps) {
                 />
               </div>
               <h3 class={tw`mt-4 text-sm text-gray-700`}>{node.title}</h3>
-              <p class={tw`mt-1 text-lg font-medium text-gray-900`}>$100</p>
+              <p class={tw`mt-1 text-lg font-medium text-gray-900`}>
+                {formatCurrency(node.priceRange.minVariantPrice)}
+              </p>
             </a>
           ))}
         </div>

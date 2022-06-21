@@ -111,3 +111,11 @@ export async function removeFromCart(cartId: string, lineItemId: string) {
   }).then(({ cart }) => cart);
   mutate("cart", mutation);
 }
+
+export function formatCurrency(amount: { amount: number; currencyCode: string }) {
+  const intl = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: amount.currencyCode,
+  });
+  return intl.format(amount.amount);
+}

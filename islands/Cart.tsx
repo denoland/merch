@@ -2,7 +2,7 @@
 import { h, IS_BROWSER, useRef } from "$fresh/runtime.ts";
 import { apply, tw } from "$twind";
 import { animation, css } from "$twind/css";
-import { removeFromCart, useCart } from "@/utils/data.ts";
+import { formatCurrency, removeFromCart, useCart } from "@/utils/data.ts";
 
 // Lazy load a <dialog> polyfill.
 // @ts-expect-error HTMLDialogElement is not just a type!
@@ -158,12 +158,4 @@ function CartInner(props: { cart: CartData | undefined }) {
       </a>
     </div>
   );
-}
-
-function formatCurrency(amount: { amount: number; currencyCode: string }) {
-  const intl = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: amount.currencyCode,
-  });
-  return intl.format(amount.amount);
 }
