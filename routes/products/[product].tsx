@@ -17,6 +17,7 @@ const q = `query ($product: String!) {
       edges {
         node {
           id
+          title
         }
       }
     }
@@ -101,7 +102,18 @@ function ProductDetails({ data }: Record<string, any>) {
       >
         <section aria-labelledby="options-heading">
           <form>
+            {data.product.variants.edges.length > 1 && (
+              <select
+                class={tw
+                  `w-full border rounded-md py-3 px-8 flex items-center justify-center text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-50`}
+              >
+                {data.product.variants.edges.map((edge) => {
+                  return <option value={edge.node.id}>{edge.node.title}</option>
+                })}
+              </select>
+            )}
             <div class={tw`mt-10`}>
+              {/* TODO: id must be updated if variation selection changes. */}
               <AddToCart id={data.product.variants.edges[0].node.id} />
             </div>
           </form>
