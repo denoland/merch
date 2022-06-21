@@ -2,7 +2,7 @@
 import { h, IS_BROWSER, useRef } from "$fresh/runtime.ts";
 import { apply, tw } from "$twind";
 import { animation, css } from "$twind/css";
-import { useCart } from "@/utils/data.ts";
+import { removeFromCart, useCart } from "@/utils/data.ts";
 
 // Lazy load a <dialog> polyfill.
 // @ts-expect-error HTMLDialogElement is not just a type!
@@ -95,6 +95,13 @@ function CartInner(props: { cart: CartData | undefined }) {
   const corners = apply`rounded(tl-2xl tr-2xl sm:(tr-none bl-2xl))`;
   const card = tw
     `py-8 px-6 h-full bg-white ${corners} flex flex-col justify-between`;
+  const { data } = useCart();
+  const remove = (lineItemId) => {
+    const cartId = data!.id;
+
+    console.log("remove", cartId, lineItemId);
+    removeFromCart(cartId, lineItemId);
+  };
 
   return (
     <div class={card}>
@@ -123,9 +130,14 @@ function CartInner(props: { cart: CartData | undefined }) {
               <ul>
                 {props.cart.lines.edges.map((line) => (
                   <li>
-                    {line.node.merchandise.product.title} x{line.node.quantity}
-                    {" "}
-                    ({formatCurrency(line.node.estimatedCost.totalAmount)})
+                    <div>
+                      {line.node.merchandise.product.title} x{line.node.quantity}
+                      {" "}
+                      ({formatCurrency(line.node.estimatedCost.totalAmount)})
+                    </div>
+                    <button onClick={() => remove(line.node.id)}>
+                      Remove
+                    </button>
                   </li>
                 ))}
               </ul>

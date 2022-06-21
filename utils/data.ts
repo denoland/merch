@@ -95,3 +95,19 @@ export async function addToCart(cartId: string, productId: string) {
   }).then(({ cart }) => cart);
   mutate("cart", mutation);
 }
+
+const REMOVE_FROM_CART_MUTATION = `
+  mutation removeFromCart($cartId: ID!, $lineIds: [ID!]!) {
+    cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+      cart ${CART_QUERY}
+    }
+  }
+`;
+
+export async function removeFromCart(cartId: string, lineItemId: string) {
+  const mutation = graphql<{ cart: CartData }>(REMOVE_FROM_CART_MUTATION, {
+    cartId,
+    lineIds: [lineItemId],
+  }).then(({ cart }) => cart);
+  mutate("cart", mutation);
+}
