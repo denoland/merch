@@ -87,7 +87,7 @@ function ProductDetails({ product }: { product: Product }) {
           </div>
 
           {/* TODO: Update this when the variant value changes. */}
-          {!data.product.variants.edges[0].node.availableForSale && (
+          {!product.variants.nodes[0].availableForSale && (
             <div class={tw`flex items-center`}>
               <p class={tw`text-base text-gray-500`}>
                 Out of stock
@@ -137,10 +137,10 @@ function ProductDetails({ product }: { product: Product }) {
                 })}
               </select>
             )}
-            {data.product.variants.nodes[0].availableForSale && (
+            {product.variants.nodes[0].availableForSale && (
               <div class={tw`mt-10`}>
                 {/* TODO: Update this when the variant value changes. */}
-                <AddToCart id={data.product.variants.nodes[0].id} />
+                <AddToCart id={product.variants.nodes[0].id} />
               </div>
             )}
           </form>
