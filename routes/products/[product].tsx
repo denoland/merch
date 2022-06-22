@@ -18,6 +18,7 @@ const q = `query ($product: String!) {
       edges {
         node {
           id
+          availableForSale
           priceV2 {
             amount
             currencyCode
@@ -80,6 +81,15 @@ function ProductDetails({ data }: Record<string, any>) {
             </p>
           </div>
 
+          {/* TODO: Update this when the variant value changes. */}
+          {!data.product.variants.edges[0].node.availableForSale && (
+            <div class={tw`flex items-center`}>
+              <p class={tw`text-base text-gray-500`}>
+                Out of stock
+              </p>
+            </div>
+          )}
+
           <div class={tw`mt-4 space-y-6`}>
             <p class={tw`text-base text-gray-500`}>
               {data.product.description}
@@ -122,10 +132,12 @@ function ProductDetails({ data }: Record<string, any>) {
                 })}
               </select>
             )}
-            <div class={tw`mt-10`}>
-              {/* TODO: id must be updated if variation selection changes. */}
-              <AddToCart id={data.product.variants.edges[0].node.id} />
-            </div>
+            {data.product.variants.edges[0].node.availableForSale && (
+              <div class={tw`mt-10`}>
+                {/* TODO: Update this when the variant value changes. */}
+                <AddToCart id={data.product.variants.edges[0].node.id} />
+              </div>
+            )}
           </form>
         </section>
       </div>
