@@ -3,6 +3,7 @@
 import { Fragment, h, PageProps } from "$fresh/runtime.ts";
 import { Handlers } from "$fresh/server.ts";
 import { tw } from "twind";
+import { formatCurrency } from "@/utils/data.ts";
 import { graphql } from "@/utils/shopify.ts";
 import { NavBar } from "@/components/NavBar.tsx";
 import AddToCart from "@/islands/AddToCart.tsx";
@@ -17,6 +18,10 @@ const q = `query ($product: String!) {
       edges {
         node {
           id
+          priceV2 {
+            amount
+            currencyCode
+          }
           title
         }
       }
@@ -69,7 +74,10 @@ function ProductDetails({ data }: Record<string, any>) {
           </h2>
 
           <div class={tw`flex items-center`}>
-            <p class={tw`text-lg text-gray-900 sm:text-xl`}>$100</p>
+            <p class={tw`text-lg text-gray-900 sm:text-xl`}>
+              {/* TODO: Update this when the variant value changes. */}
+              {formatCurrency(data.product.variants.edges[0].node.priceV2)}
+            </p>
           </div>
 
           <div class={tw`mt-4 space-y-6`}>
