@@ -5,43 +5,47 @@ import { tw } from "@twind";
 import { formatCurrency } from "@/utils/data.ts";
 import { graphql } from "@/utils/shopify.ts";
 import { NavBar } from "@/components/NavBar.tsx";
+import { List, Product } from "../utils/types.ts";
 
 const q = `{
   products(first: 10) {
-    edges {
-      node {
-        id
-        handle
-        title
-        featuredImage {
-          url
-          width
-          height
-          altText
+    nodes {
+      id
+      handle
+      title
+      featuredImage {
+        url
+        width
+        height
+        altText
+      }
+      priceRange {
+        minVariantPrice {
+          amount
+          currencyCode
         }
-        priceRange {
-          minVariantPrice {
-            amount
-            currencyCode
-          }
-          maxVariantPrice {
-            amount
-            currencyCode
-          }
+        maxVariantPrice {
+          amount
+          currencyCode
         }
       }
     }
   }
 }`;
 
-export const handler: Handlers = {
-  async GET(req, ctx) {
-    const data = await graphql(q);
+interface Data {
+  products: List<Product>;
+}
+
+export const handler: Handlers<Data> = {
+  async GET(_req, ctx) {
+    const data = await graphql<Data>(q);
     return ctx.render(data);
   },
 };
 
-export default function Home({ data }: PageProps) {
+export default function Home({ data }: PageProps<Data>) {
+  const products = data.products.nodes;
   return (
     <div>
       <NavBar />
@@ -55,33 +59,33 @@ export default function Home({ data }: PageProps) {
           class={tw
             `grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8`}
         >
-          {data.products.edges.map(({ node }) => (
-            <a
-              key={node.id}
-              href={`/products/${node.handle}`}
-              class={tw`group`}
-            >
-              <div
-                class={tw
-                  `w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8`}
-              >
-                <img
-                  src={node.featuredImage.url}
-                  alt={node.featuredImage.altText}
-                  width={node.featuredImage.width}
-                  height={node.featuredImage.height}
-                  class={tw
-                    `w-full h-full object-center object-cover group-hover:opacity-75`}
-                />
-              </div>
-              <h3 class={tw`mt-4 text-sm text-gray-700`}>{node.title}</h3>
-              <p class={tw`mt-1 text-lg font-medium text-gray-900`}>
-                {formatCurrency(node.priceRange.minVariantPrice)}
-              </p>
-            </a>
-          ))}
+          {products.map((product) => <ProductCard product={product} />)}
         </div>
       </div>
     </div>
+  );
+}
+
+function ProductCard(props: { product: Product }) {
+  const { product } = props;
+  return (
+    <a key={product.id} href={`/products/${product.handle}`} class={tw`group`}>
+      <div class={tw`w-full bg-gray-200 rounded-lg overflow-hidden`}>
+        {product.featuredImage && (
+          <img
+            src={product.featuredImage.url}
+            alt={product.featuredImage.altText}
+            width={product.featuredImage.width}
+            height={product.featuredImage.height}
+            class={tw
+              `w-full h-full object-center object-cover group-hover:opacity-75`}
+          />
+        )}
+      </div>
+      <h3 class={tw`mt-4 text-sm text-gray-700`}>{product.title}</h3>
+      <p class={tw`mt-1 text-lg font-medium text-gray-900`}>
+        {formatCurrency(product.priceRange.minVariantPrice)}
+      </p>
+    </a>
   );
 }

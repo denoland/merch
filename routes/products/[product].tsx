@@ -7,6 +7,7 @@ import { formatCurrency } from "@/utils/data.ts";
 import { graphql } from "@/utils/shopify.ts";
 import { NavBar } from "@/components/NavBar.tsx";
 import AddToCart from "@/islands/AddToCart.tsx";
+import { Product } from "@/utils/types.ts";
 
 const q = `query ($product: String!) {
   product(handle: $product) {
@@ -15,15 +16,13 @@ const q = `query ($product: String!) {
     # TODO: use 'descriptionHtml' instead of 'description'
 
     variants(first: 10) {
-      edges {
-        node {
-          id
-          availableForSale
-          priceV2 {
-            amount
-            currencyCode
-          }
-          title
+      nodes {
+        id
+        title
+        availableForSale
+        priceV2 {
+          amount
+          currencyCode
         }
       }
     }
@@ -37,24 +36,30 @@ const q = `query ($product: String!) {
   }
 }`;
 
-export const handler: Handlers = {
-  async GET(req, ctx) {
-    const data = await graphql(q, { product: ctx.params.product });
+interface Query {
+  product: Product | null;
+}
+
+export const handler: Handlers<Query> = {
+  async GET(_req, ctx) {
+    const data = await graphql<Query>(q, { product: ctx.params.product });
+    if (!data.product) {
+      return new Response("Product not found", { status: 404 });
+    }
     return ctx.render(data);
   },
 };
 
-export default function Home({ data }: PageProps) {
-  console.log("data", data.product.variants);
+export default function ProductPage({ data }: PageProps<Query>) {
   return (
     <>
       <NavBar />
-      <ProductDetails data={data} />
+      <ProductDetails product={data.product!} />
     </>
   );
 }
 
-function ProductDetails({ data }: Record<string, any>) {
+function ProductDetails({ product }: { product: Product }) {
   return (
     <div
       class={tw
@@ -66,7 +71,7 @@ function ProductDetails({ data }: Record<string, any>) {
           class={tw
             `text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl`}
         >
-          {data.product.title}
+          {product.title}
         </h1>
 
         <section aria-labelledby="information-heading" class={tw`mt-4`}>
@@ -77,7 +82,7 @@ function ProductDetails({ data }: Record<string, any>) {
           <div class={tw`flex items-center`}>
             <p class={tw`text-lg text-gray-900 sm:text-xl`}>
               {/* TODO: Update this when the variant value changes. */}
-              {formatCurrency(data.product.variants.edges[0].node.priceV2)}
+              {formatCurrency(product.variants.nodes[0].priceV2)}
             </p>
           </div>
 
@@ -92,7 +97,7 @@ function ProductDetails({ data }: Record<string, any>) {
 
           <div class={tw`mt-4 space-y-6`}>
             <p class={tw`text-base text-gray-500`}>
-              {data.product.description}
+              {product.description}
             </p>
           </div>
         </section>
@@ -103,13 +108,15 @@ function ProductDetails({ data }: Record<string, any>) {
         class={tw`mt-10 lg:mt-0 lg:col-start-2 lg:row-span-2 lg:self-center`}
       >
         <div class={tw`rounded-lg overflow-hidden`}>
-          <img
-            src={data.product.featuredImage.url}
-            alt={data.product.featuredImage.altText}
-            width={data.product.featuredImage.width}
-            height={data.product.featuredImage.height}
-            class={tw`w-full h-full object-center object-cover`}
-          />
+          {product.featuredImage && (
+            <img
+              src={product.featuredImage.url}
+              alt={product.featuredImage.altText}
+              width={product.featuredImage.width}
+              height={product.featuredImage.height}
+              class={tw`w-full h-full object-center object-cover`}
+            />
+          )}
         </div>
       </div>
 
@@ -120,22 +127,20 @@ function ProductDetails({ data }: Record<string, any>) {
       >
         <section aria-labelledby="options-heading">
           <form>
-            {data.product.variants.edges.length > 1 && (
+            {product.variants.nodes.length > 1 && (
               <select
                 class={tw
                   `w-full border rounded-md py-3 px-8 flex items-center justify-center text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-50`}
               >
-                {data.product.variants.edges.map((edge) => {
-                  return (
-                    <option value={edge.node.id}>{edge.node.title}</option>
-                  );
+                {product.variants.nodes.map((variant) => {
+                  return <option value={variant.id}>{variant.title}</option>;
                 })}
               </select>
             )}
-            {data.product.variants.edges[0].node.availableForSale && (
+            {data.product.variants.nodes[0].availableForSale && (
               <div class={tw`mt-10`}>
                 {/* TODO: Update this when the variant value changes. */}
-                <AddToCart id={data.product.variants.edges[0].node.id} />
+                <AddToCart id={data.product.variants.nodes[0].id} />
               </div>
             )}
           </form>

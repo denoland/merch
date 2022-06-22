@@ -1,56 +1,49 @@
 import useSWR, { mutate } from "swr";
 import { graphql } from "@/utils/shopify.ts";
+import { Money } from "./types.ts";
 
 export interface CartData {
   id: string;
   lines: {
-    edges: {
-      node: {
-        id: string;
-        quantity: number;
-        merchandise: {
-          title: string;
-        };
-        estimatedCost: {
-          totalAmount: {
-            amount: number;
-            currencyCode: string;
-          };
-        };
+    nodes: {
+      id: string;
+      quantity: number;
+      merchandise: {
+        title: string;
+      };
+      estimatedCost: {
+        totalAmount: Money;
       };
     }[];
   };
+  checkoutUrl: string;
   estimatedCost: {
-    totalAmount: {
-      amount: number;
-      currencyCode: string;
-    };
+    totalAmount: Money;
   };
 }
 
 const CART_QUERY = `{
   id
   lines(first: 100) {
-    edges {
-      node {
-        id
-        quantity
-        merchandise {
-          ...on ProductVariant {
-            product {
-              title
-            }
+    nodes {
+      id
+      quantity
+      merchandise {
+        ...on ProductVariant {
+          product {
+            title
           }
         }
-        estimatedCost {
-          totalAmount {
-            amount
-            currencyCode
-          }
+      }
+      estimatedCost {
+        totalAmount {
+          amount
+          currencyCode
         }
       }
     }
   }
+  checkoutUrl
   estimatedCost {
     totalAmount {
       amount
@@ -112,9 +105,7 @@ export async function removeFromCart(cartId: string, lineItemId: string) {
   mutate("cart", mutation);
 }
 
-export function formatCurrency(
-  amount: { amount: number; currencyCode: string },
-) {
+export function formatCurrency(amount: Money) {
   const intl = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: amount.currencyCode,

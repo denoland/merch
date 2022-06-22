@@ -82,7 +82,7 @@ export default function Cart() {
             class={tw
               `h-4 w-4 text-center align-middle text-white text-[0.6rem] leading-4`}
           >
-            {data?.lines.edges.length}
+            {data?.lines.nodes.length}
           </div>
         </div>
       </button>
@@ -110,6 +110,11 @@ function CartInner(props: { cart: CartData | undefined }) {
     removeFromCart(cartId, lineItemId);
   };
 
+  const checkout = (e: Event) => {
+    e.preventDefault();
+    console.log("checkout");
+  };
+
   return (
     <div class={card}>
       <div class={tw`flex justify-between`}>
@@ -131,18 +136,17 @@ function CartInner(props: { cart: CartData | undefined }) {
       </div>
       {props.cart && (
         <div class={tw`flex-grow-1 my-4`}>
-          {props.cart.lines.edges.length === 0
+          {props.cart.lines.nodes.length === 0
             ? <p class={tw`text-gray-700`}>There are no items in the cart.</p>
             : (
               <ul>
-                {props.cart.lines.edges.map((line) => (
+                {props.cart.lines.nodes.map((line) => (
                   <li>
                     <div>
-                      {line.node.merchandise.product.title}{" "}
-                      x{line.node.quantity}{" "}
-                      ({formatCurrency(line.node.estimatedCost.totalAmount)})
+                      {line.merchandise.product.title} x{line.quantity}{" "}
+                      ({formatCurrency(line.estimatedCost.totalAmount)})
                     </div>
-                    <button onClick={() => remove(line.node.id)}>
+                    <button onClick={() => remove(line.id)}>
                       Remove
                     </button>
                   </li>
@@ -156,13 +160,12 @@ function CartInner(props: { cart: CartData | undefined }) {
           TOTAL: {formatCurrency(props.cart.estimatedCost.totalAmount)}
         </div>
       )}
-      <a
-        class={tw
-          `block p-2 border border-gray-200 rounded-xl bg-gray-50 text-gray-500 cursor-default`}
-        disabled
+      <button
+        class={tw`block p-2 border border-gray-200 rounded-xl hover:bg-gray-50`}
+        onClick={checkout}
       >
         Checkout
-      </a>
+      </button>
     </div>
   );
 }

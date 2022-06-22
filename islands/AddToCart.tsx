@@ -11,7 +11,8 @@ export default function AddToCart(props: AddToCartProps) {
   const { data } = useCart();
   console.log("data", data);
 
-  const add = () => {
+  const add = (e) => {
+    e.preventDefault();
     console.log("add", props.id);
     addToCart(data!.id, props.id);
   };
