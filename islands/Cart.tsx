@@ -1,8 +1,15 @@
 /** @jsx h */
-import { h, IS_BROWSER, useRef } from "$fresh/runtime.ts";
-import { apply, tw } from "$twind";
-import { animation, css } from "$twind/css";
-import { formatCurrency, removeFromCart, useCart } from "@/utils/data.ts";
+import { h } from "preact";
+import { useRef } from "preact/hooks";
+import { IS_BROWSER } from "$fresh/runtime.ts";
+import { apply, tw } from "@twind";
+import { animation, css } from "twind/css";
+import {
+  CartData,
+  formatCurrency,
+  removeFromCart,
+  useCart,
+} from "@/utils/data.ts";
 
 // Lazy load a <dialog> polyfill.
 // @ts-expect-error HTMLDialogElement is not just a type!
@@ -131,8 +138,8 @@ function CartInner(props: { cart: CartData | undefined }) {
                 {props.cart.lines.edges.map((line) => (
                   <li>
                     <div>
-                      {line.node.merchandise.product.title} x{line.node.quantity}
-                      {" "}
+                      {line.node.merchandise.product.title}{" "}
+                      x{line.node.quantity}{" "}
                       ({formatCurrency(line.node.estimatedCost.totalAmount)})
                     </div>
                     <button onClick={() => remove(line.node.id)}>

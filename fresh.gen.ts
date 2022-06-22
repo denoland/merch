@@ -2,7 +2,6 @@
 // This file SHOULD be checked into source version control.
 // To update this file, run `fresh manifest`.
 
-import * as $0 from "./routes/_render.tsx";
 import * as $1 from "./routes/index.tsx";
 import * as $2 from "./routes/products/[product].tsx";
 import * as $$0 from "./islands/AddToCart.tsx";
@@ -10,7 +9,6 @@ import * as $$1 from "./islands/Cart.tsx";
 
 const manifest = {
   routes: {
-    "./routes/_render.tsx": $0,
     "./routes/index.tsx": $1,
     "./routes/products/[product].tsx": $2,
   },

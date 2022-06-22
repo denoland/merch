@@ -1,7 +1,7 @@
 import { IS_BROWSER } from "$fresh/runtime.ts";
-import { apply, setup, ThemeConfiguration, tw } from "$twind";
-import * as colors from "$twind/colors";
-export { apply, setup, tw };
+import { setup, ThemeConfiguration } from "twind";
+import * as colors from "twind/colors";
+export * from "twind";
 export const theme: ThemeConfiguration = {
   colors: {
     black: colors.black,
