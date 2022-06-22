@@ -1,7 +1,7 @@
-import useSWR, { mutate } from "$swr";
+import useSWR, { mutate } from "swr";
 import { graphql } from "@/utils/shopify.ts";
 
-interface CartData {
+export interface CartData {
   id: string;
   lines: {
     edges: {
@@ -112,7 +112,9 @@ export async function removeFromCart(cartId: string, lineItemId: string) {
   mutate("cart", mutation);
 }
 
-export function formatCurrency(amount: { amount: number; currencyCode: string }) {
+export function formatCurrency(
+  amount: { amount: number; currencyCode: string },
+) {
   const intl = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: amount.currencyCode,

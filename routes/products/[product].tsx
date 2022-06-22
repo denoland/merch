@@ -1,8 +1,8 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
-import { Fragment, h, PageProps } from "$fresh/runtime.ts";
-import { Handlers } from "$fresh/server.ts";
-import { tw } from "twind";
+import { Fragment, h } from "preact";
+import { Handlers, PageProps } from "$fresh/server.ts";
+import { tw } from "@twind";
 import { formatCurrency } from "@/utils/data.ts";
 import { graphql } from "@/utils/shopify.ts";
 import { NavBar } from "@/components/NavBar.tsx";
@@ -116,7 +116,9 @@ function ProductDetails({ data }: Record<string, any>) {
                   `w-full border rounded-md py-3 px-8 flex items-center justify-center text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-50`}
               >
                 {data.product.variants.edges.map((edge) => {
-                  return <option value={edge.node.id}>{edge.node.title}</option>
+                  return (
+                    <option value={edge.node.id}>{edge.node.title}</option>
+                  );
                 })}
               </select>
             )}

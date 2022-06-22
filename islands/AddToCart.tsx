@@ -1,8 +1,7 @@
 /** @jsx h */
-/** @jsxFrag Fragment */
-import { h } from "$fresh/runtime.ts";
+import { h } from "preact";
+import { tw } from "@twind";
 import { addToCart, useCart } from "@/utils/data.ts";
-import { tw } from "twind";
 
 interface AddToCartProps {
   id: string;

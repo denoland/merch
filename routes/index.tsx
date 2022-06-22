@@ -1,8 +1,7 @@
 /** @jsx h */
-/** @jsxFrag Fragment */
-import { Fragment, h, PageProps } from "$fresh/runtime.ts";
-import { Handlers } from "$fresh/server.ts";
-import { tw } from "twind";
+import { h } from "preact";
+import { Handlers, PageProps } from "$fresh/server.ts";
+import { tw } from "@twind";
 import { formatCurrency } from "@/utils/data.ts";
 import { graphql } from "@/utils/shopify.ts";
 import { NavBar } from "@/components/NavBar.tsx";
