@@ -1,5 +1,5 @@
 /** @jsx h */
-import { h } from "$fresh/runtime.ts";
+import { h } from "preact";
 import { tw } from "@twind";
 import Cart from "../islands/Cart.tsx";
 
