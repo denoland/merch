@@ -59,7 +59,6 @@ export default function Cart() {
         onClick={() => ref.current!.showModal()}
         class={tw`block relative`}
       >
-        {/* <span>Cart ({data?.lines.edges.length})</span> */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6"
