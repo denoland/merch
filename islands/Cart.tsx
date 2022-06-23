@@ -157,7 +157,7 @@ function CartInner(props: { cart: CartData | undefined }) {
       )}
       {props.cart && (
         <div class={tw`my-4`}>
-          TOTAL: {formatCurrency(props.cart.estimatedCost.totalAmount)}
+          Total: {formatCurrency(props.cart.estimatedCost.totalAmount)}
         </div>
       )}
       <button
