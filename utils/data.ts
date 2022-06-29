@@ -73,6 +73,14 @@ async function cartFetcher(): Promise<CartData> {
     { id },
   );
 
+  if (cart === null) {
+    // If there is a cart ID, but the returned cart is null, then the cart
+    // was already part of a completed order. Clear the cart ID and get a new
+    // one.
+    localStorage.removeItem("cartId");
+    return cartFetcher();
+  }
+
   return cart;
 }
 
