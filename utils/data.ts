@@ -1,6 +1,6 @@
 import useSWR, { mutate } from "swr";
 import { graphql } from "@/utils/shopify.ts";
-import { Money } from "./types.ts";
+import { Image, Money } from "./types.ts";
 
 export interface CartData {
   id: string;
@@ -9,6 +9,7 @@ export interface CartData {
       id: string;
       quantity: number;
       merchandise: {
+        image: Image;
         title: string;
       };
       estimatedCost: {
@@ -30,6 +31,11 @@ const CART_QUERY = `{
       quantity
       merchandise {
         ...on ProductVariant {
+          title
+          image {
+            url
+            altText
+          }
           product {
             title
           }

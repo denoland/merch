@@ -117,7 +117,7 @@ function CartInner(props: { cart: CartData | undefined }) {
   return (
     <div class={card}>
       <div class={tw`flex justify-between`}>
-        <h1 class={tw`text-4xl font-bold m-0`}>Cart</h1>
+        <h2 class={tw`text-lg font-medium text-gray-900`}>Shopping Cart</h2>
         <button
           class={tw`py-1`}
           onClick={(e) => {
@@ -138,16 +138,40 @@ function CartInner(props: { cart: CartData | undefined }) {
           {props.cart.lines.nodes.length === 0
             ? <p class={tw`text-gray-700`}>There are no items in the cart.</p>
             : (
-              <ul>
+              <ul role="list" class={tw`-my-6 divide-y divide-gray-200`}>
                 {props.cart.lines.nodes.map((line) => (
-                  <li>
-                    <div>
-                      {line.merchandise.product.title} x{line.quantity}{" "}
-                      ({formatCurrency(line.estimatedCost.totalAmount)})
+                  <li class={tw`flex py-6`}>
+                    <div class={tw`h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200`}>
+                      <img
+                        src={line.merchandise.image.url}
+                        alt={line.merchandise.image.altText ?? line.merchandise.product.title}
+                        class={tw`h-full w-full object-cover object-center`}
+                      />
                     </div>
-                    <button onClick={() => remove(line.id)}>
-                      Remove
-                    </button>
+                    <div class={tw`ml-4 flex flex-1 flex-col`}>
+                      <div>
+                        <div class={tw`flex justify-between text-base font-medium text-gray-900`}>
+                          <h3>{line.merchandise.product.title}</h3>
+                          <p class={tw`ml-4`}>{formatCurrency(line.estimatedCost.totalAmount)}</p>
+                        </div>
+                        <p class={tw`mt-1 text-sm text-gray-500`}>
+                          {line.merchandise.title !== line.merchandise.product.title ? line.merchandise.title : ""}
+                        </p>
+                      </div>
+                      <div class={tw`flex flex-1 items-end justify-between text-sm`}>
+                        <p class={tw`text-gray-500`}>Quantity {line.quantity}</p>
+
+                        <div class={tw`flex`}>
+                          <button
+                            type="button"
+                            class={tw`font-medium`}
+                            onClick={() => remove(line.id)}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -155,16 +179,40 @@ function CartInner(props: { cart: CartData | undefined }) {
         </div>
       )}
       {props.cart && (
-        <div class={tw`my-4`}>
-          Total: {formatCurrency(props.cart.estimatedCost.totalAmount)}
+        <div class={tw`border-t border-gray-200 py-6 px-4 sm:px-6`}>
+          <div class={tw`flex justify-between text-base font-medium`}>
+            <p>Subtotal</p>
+            <p>{formatCurrency(props.cart.estimatedCost.totalAmount)}</p>
+          </div>
+          <p class={tw`mt-0.5 text-sm text-gray-500`}>
+            Shipping and taxes calculated at checkout.
+          </p>
+          <div class={tw`mt-6`}>
+            <button
+              type="button"
+              class={tw`w-full bg-gray-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-50`}
+              disabled={props.cart.lines.nodes.length === 0}
+              onClick={checkout}
+            >
+              Checkout
+            </button>
+          </div>
+          <div class={tw`mt-6 flex justify-center text-center text-sm text-gray-500`}>
+            <p>
+              or&nbsp;
+              <button
+                type="button"
+                class={tw`font-medium`}
+                onClick={(e) => {
+                  (e.target as HTMLButtonElement).closest("dialog")!.close();
+                }}
+              >
+                Continue Shopping<span aria-hidden="true"> &rarr;</span>
+              </button>
+            </p>
+          </div>
         </div>
       )}
-      <button
-        class={tw`block p-2 border border-gray-200 rounded-xl hover:bg-gray-50`}
-        onClick={checkout}
-      >
-        Checkout
-      </button>
     </div>
   );
 }
