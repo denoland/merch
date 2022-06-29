@@ -112,6 +112,7 @@ function CartInner(props: { cart: CartData | undefined }) {
   const checkout = (e: Event) => {
     e.preventDefault();
     console.log("checkout");
+    location.href = data.checkoutUrl;
   };
 
   return (
