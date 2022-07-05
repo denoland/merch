@@ -10,8 +10,7 @@ import { Product } from "@/utils/types.ts";
 const q = `query ($product: String!) {
   product(handle: $product) {
     title
-    description
-    # TODO: use 'descriptionHtml' instead of 'description'
+    descriptionHtml
 
     variants(first: 10) {
       nodes {

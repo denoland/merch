@@ -23,7 +23,7 @@ export interface Product {
   id: string;
   handle: string;
   title: string;
-  description: string;
+  descriptionHtml: string;
   featuredImage: Image | null;
   variants: List<ProductVariant>;
   priceRange: ProductPriceRange;
