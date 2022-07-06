@@ -17,7 +17,7 @@ export function Footer() {
       </a>
       |
       <span className="flex items-center lt-sm:gap-4 gap-9">
-        <a href="https://github.com/denoland/deno_shop">
+        <a href="https://github.com/denoland/merch">
           Source
         </a>
       </span>
