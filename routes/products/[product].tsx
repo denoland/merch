@@ -2,6 +2,7 @@
 /** @jsxFrag Fragment */
 import { Fragment, h } from "preact";
 import { Handlers, PageProps } from "$fresh/server.ts";
+import { Footer } from "@/components/Footer.tsx";
 import { NavBar } from "@/components/NavBar.tsx";
 import ProductDetails from "@/islands/ProductDetails.tsx";
 import { graphql } from "@/utils/shopify.ts";
@@ -52,6 +53,7 @@ export default function ProductPage({ data }: PageProps<Query>) {
     <>
       <NavBar />
       <ProductDetails product={data.product!} />
+      <Footer />
     </>
   );
 }

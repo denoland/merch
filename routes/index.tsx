@@ -4,6 +4,7 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import { tw } from "@twind";
 import { formatCurrency } from "@/utils/data.ts";
 import { graphql } from "@/utils/shopify.ts";
+import { Footer } from "@/components/Footer.tsx";
 import { NavBar } from "@/components/NavBar.tsx";
 import { List, Product } from "../utils/types.ts";
 
@@ -62,6 +63,7 @@ export default function Home({ data }: PageProps<Data>) {
           {products.map((product) => <ProductCard product={product} />)}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
