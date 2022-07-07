@@ -3,6 +3,7 @@
 import { Fragment, h } from "preact";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { Footer } from "@/components/Footer.tsx";
+import { HeadElement } from "@/components/HeadElement.tsx";
 import { NavBar } from "@/components/NavBar.tsx";
 import ProductDetails from "@/islands/ProductDetails.tsx";
 import { graphql } from "@/utils/shopify.ts";
@@ -11,6 +12,7 @@ import { Product } from "@/utils/types.ts";
 const q = `query ($product: String!) {
   product(handle: $product) {
     title
+    description
     descriptionHtml
 
     variants(first: 10) {
@@ -48,9 +50,16 @@ export const handler: Handlers<Query> = {
   },
 };
 
-export default function ProductPage({ data }: PageProps<Query>) {
+export default function ProductPage(ctx: PageProps<Query>) {
+  const { data, url } = ctx;
   return (
     <>
+      <HeadElement
+        description={data.product.description}
+        image={data.product.featuredImage.url}
+        title={data.product.title}
+        url={url}
+      />
       <NavBar />
       <ProductDetails product={data.product!} />
       <Footer />

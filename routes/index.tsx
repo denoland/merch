@@ -5,6 +5,7 @@ import { tw } from "@twind";
 import { formatCurrency } from "@/utils/data.ts";
 import { graphql } from "@/utils/shopify.ts";
 import { Footer } from "@/components/Footer.tsx";
+import { HeadElement } from "@/components/HeadElement.tsx";
 import { NavBar } from "@/components/NavBar.tsx";
 import { List, Product } from "../utils/types.ts";
 
@@ -45,10 +46,17 @@ export const handler: Handlers<Data> = {
   },
 };
 
-export default function Home({ data }: PageProps<Data>) {
+export default function Home(ctx: PageProps<Data>) {
+  const { data, url } = ctx;
   const products = data.products.nodes;
   return (
     <div>
+      <HeadElement
+        description="Shop for Deno Merch"
+        image={url.href + "og-image.png"}
+        title="Deno Merch"
+        url={url}
+      />
       <NavBar />
       <div
         class={tw
