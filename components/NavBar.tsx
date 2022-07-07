@@ -16,7 +16,7 @@ export function NavBar() {
           class={tw`h-7 w-7`}
         />
         <h1 class={tw`text-xl`}>
-          Deno <span class={tw`font-light`}>Shop</span>
+          Deno <span class={tw`font-light`}>Merch</span>
         </h1>
       </a>
       <Cart />
