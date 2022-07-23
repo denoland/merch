@@ -52,11 +52,15 @@ export const handler: Handlers<Query> = {
 
 export default function ProductPage(ctx: PageProps<Query>) {
   const { data, url } = ctx;
+  if (!data.product) {
+    return <div>Product not found</div>;
+  }
+
   return (
     <>
       <HeadElement
         description={data.product.description}
-        image={data.product.featuredImage.url}
+        image={data.product.featuredImage?.url}
         title={data.product.title}
         url={url}
       />

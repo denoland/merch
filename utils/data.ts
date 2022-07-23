@@ -9,8 +9,11 @@ export interface CartData {
       id: string;
       quantity: number;
       merchandise: {
-        image: Image;
+        product: {
+          title: string;
+        };
         title: string;
+        image: Image;
       };
       estimatedCost: {
         totalAmount: Money;
@@ -95,7 +98,7 @@ const ADD_TO_CART_QUERY =
   }
 }`;
 
-export async function addToCart(cartId: string, productId: string) {
+export function addToCart(cartId: string, productId: string) {
   const mutation = graphql<{ cart: CartData }>(ADD_TO_CART_QUERY, {
     cartId,
     lines: [{ merchandiseId: productId }],
@@ -111,7 +114,7 @@ const REMOVE_FROM_CART_MUTATION = `
   }
 `;
 
-export async function removeFromCart(cartId: string, lineItemId: string) {
+export function removeFromCart(cartId: string, lineItemId: string) {
   const mutation = graphql<{ cart: CartData }>(REMOVE_FROM_CART_MUTATION, {
     cartId,
     lineIds: [lineItemId],

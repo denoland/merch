@@ -4,7 +4,10 @@ import { tw } from "@twind";
 
 export function Footer() {
   return (
-    <footer class={tw`h-18 px-4 sm:px-8 border-gray-200 sm:border-transparent border-b flex items-center gap-4`}>
+    <footer
+      class={tw
+        `h-18 px-4 sm:px-8 border-gray-200 sm:border-transparent border-b flex items-center gap-4`}
+    >
       <a href="https://fresh.deno.dev">
         <span class={tw`flex items-center gap-1`}>
           <img

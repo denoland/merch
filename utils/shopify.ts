@@ -3,7 +3,7 @@ const SHOPIFY_ACCESS_TOKEN = "235190bee2a33cb4da0897edb6e954de";
 
 export async function graphql<T>(
   query: string,
-  variables: Record<string, any> = {},
+  variables: Record<string, unknown> = {},
 ): Promise<T> {
   const resp = await fetch(`https://${SHOPIFY_SHOP}/api/2022-04/graphql.json`, {
     method: "POST",
@@ -19,7 +19,7 @@ export async function graphql<T>(
   }
   const json = await resp.json();
   if (json.errors) {
-    throw new Error(json.errors.map((e: any) => e.message).join("\n"));
+    throw new Error(json.errors.map((e: Error) => e.message).join("\n"));
   }
   return json.data as T;
 }

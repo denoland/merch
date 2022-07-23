@@ -43,7 +43,10 @@ export default function ProductDetails({ product }: { product: Product }) {
           )}
 
           <div class={tw`mt-4 space-y-6`}>
-            <p class={tw`text-base text-gray-500`} dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} />
+            <p
+              class={tw`text-base text-gray-500`}
+              dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+            />
           </div>
         </section>
       </div>
@@ -74,12 +77,17 @@ export default function ProductDetails({ product }: { product: Product }) {
           <form>
             {product.variants.nodes.length > 1 && (
               <select
-                onChange={(e) => setVariant(JSON.parse(e.target.value))}
+                onChange={(e) =>
+                  setVariant(JSON.parse((e.target as HTMLSelectElement).value))}
                 class={tw
                   `w-full border rounded-md py-3 px-8 flex items-center justify-center text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-50`}
               >
                 {product.variants.nodes.map((variant) => {
-                  return <option value={JSON.stringify(variant)}>{variant.title}</option>;
+                  return (
+                    <option value={JSON.stringify(variant)}>
+                      {variant.title}
+                    </option>
+                  );
                 })}
               </select>
             )}

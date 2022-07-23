@@ -2,8 +2,15 @@
 import { h } from "preact";
 import { Head } from "$fresh/runtime.ts";
 
-export function HeadElement({ description, image, title, url }) {
-    return (
+export type HeadProps = {
+  url: URL;
+  title: string;
+  description: string;
+  image?: string;
+};
+
+export function HeadElement({ description, image, title, url }: HeadProps) {
+  return (
     <Head>
       <title>{title}</title>
       <link rel="icon" href="/favicon.ico" sizes="32x32" />
@@ -14,7 +21,7 @@ export function HeadElement({ description, image, title, url }) {
       <meta property="og:type" content="website" />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
+      {image && <meta property="og:image" content={image} />}
 
       {/* Twitter Meta Tags */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -22,7 +29,7 @@ export function HeadElement({ description, image, title, url }) {
       <meta property="twitter:url" content={url.href} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
+      {image && <meta name="twitter:image" content={image} />}
     </Head>
   );
 }
