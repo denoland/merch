@@ -6,10 +6,9 @@ import Cart from "../islands/Cart.tsx";
 export function Header() {
   return (
     <header
-      class={tw`w-full bg-cover bg-no-repeat relative`}
+      class={tw`h-[110px] sm:!h-[144px] w-full bg-cover bg-no-repeat relative`}
       style={{
         backgroundImage: "url(/header_bg.svg)",
-        height: 144,
       }}
     >
       <div class={`rainfall ${tw`w-full h-full absolute opacity-30`}`} />

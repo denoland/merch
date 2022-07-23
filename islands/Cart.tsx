@@ -63,10 +63,10 @@ export default function Cart() {
       <button
         onClick={() => ref.current!.showModal()}
         class={tw
-          `flex gap-2 items-center border-2 border-gray-800 rounded-full px-5 py-1 font-medium text-gray-800 hover:bg-gray-800 hover:text-white transition-colors duration-300`}
+          `flex items-center gap-2 items-center border-2 border-gray-800 rounded-full px-5 py-1 font-semibold text-md text-gray-800 hover:bg-gray-800 hover:text-white transition-colors duration-300`}
       >
         <IconCart />
-        Cart {data?.lines.nodes.length ?? "0"}
+        {data?.lines.nodes.length ?? "0"}
       </button>
       <dialog
         ref={ref}

@@ -73,7 +73,7 @@ export default function Home(ctx: PageProps<Data>) {
         >
           <line y1="2" x2="100" y2="2" stroke="#ccc" stroke-width="3" />
         </svg>
-        <h2 class={tw`text-2xl lg:!text-4xl font-medium text-gray-800`}>
+        <h2 class={tw`text-xl md:!text-2xl lg:!text-3xl font-medium`}>
           Deno's collection of Dino in the rain<br /> for you and your friends.
         </h2>
       </div>
