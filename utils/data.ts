@@ -61,24 +61,28 @@ const CART_QUERY = `{
 }`;
 
 // deno-lint-ignore no-explicit-any
-function shopifyFetch<T = any>(query: string, variables?: unknown): Promise<T> {
-  return fetch("/api/shopify", {
+async function shopifyGraphql<T = any>(
+  query: string,
+  variables?: Record<string, unknown>,
+): Promise<T> {
+  const res = await fetch("/api/shopify", {
     method: "POST",
     body: JSON.stringify({ query, variables }),
-  }).then((res) => res.json());
+  });
+  return await res.json();
 }
 
 async function cartFetcher(): Promise<CartData> {
   const id = localStorage.getItem("cartId");
   if (id === null) {
-    const { cartCreate } = await shopifyFetch<
+    const { cartCreate } = await shopifyGraphql<
       { cartCreate: { cart: CartData } }
     >(`mutation { cartCreate { cart ${CART_QUERY} } }`);
     localStorage.setItem("cartId", cartCreate.cart.id);
     return cartCreate.cart;
   }
 
-  const { cart } = await shopifyFetch(
+  const { cart } = await shopifyGraphql(
     `query($id: ID!) { cart(id: $id) ${CART_QUERY} }`,
     { id },
   );
@@ -105,7 +109,7 @@ const ADD_TO_CART_QUERY =
 }`;
 
 export async function addToCart(cartId: string, productId: string) {
-  const mutation = shopifyFetch<{ cart: CartData }>(ADD_TO_CART_QUERY, {
+  const mutation = shopifyGraphql<{ cart: CartData }>(ADD_TO_CART_QUERY, {
     cartId,
     lines: [{ merchandiseId: productId }],
   }).then(({ cart }) => cart);
@@ -121,10 +125,13 @@ const REMOVE_FROM_CART_MUTATION = `
 `;
 
 export async function removeFromCart(cartId: string, lineItemId: string) {
-  const mutation = shopifyFetch<{ cart: CartData }>(REMOVE_FROM_CART_MUTATION, {
-    cartId,
-    lineIds: [lineItemId],
-  }).then(({ cart }) => cart);
+  const mutation = shopifyGraphql<{ cart: CartData }>(
+    REMOVE_FROM_CART_MUTATION,
+    {
+      cartId,
+      lineIds: [lineItemId],
+    },
+  ).then(({ cart }) => cart);
   await mutate("cart", mutation);
 }
 
