@@ -1,5 +1,3 @@
-/** @jsx h */
-/** @jsxFrag Fragment */
 import { Handlers } from "$fresh/server.ts";
 import { graphql } from "@/utils/shopify.ts";
 

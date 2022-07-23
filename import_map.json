@@ -2,6 +2,7 @@
   "imports": {
     "@/": "./",
     "@twind": "./utils/twind.ts",
+    "@twind/aspect-ratio": "https://esm.sh/@twind/aspect-ratio@0.1.4",
 
     "$fresh/": "https://deno.land/x/fresh@1.0.1/",
     "preact": "https://esm.sh/preact@10.8.1",

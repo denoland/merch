@@ -17,20 +17,20 @@ export function Header() {
         class={tw
           `w-11/12 h-24 max-w-5xl mx-auto flex items-center justify-between relative`}
       >
-        <a href="/" class={tw`flex flex-none gap-x-2`}>
+        <a href="/">
           <img
             src="/logo.svg"
             alt="Deno Logo"
             class={tw`h-8 w-8`}
           />
         </a>
-        <a href="/" class={tw`flex flex-none gap-x-2`}>
+        <h1>
           <img
             src="/text_logo.svg"
             alt="Deno Merch"
             class={tw`h-6`}
           />
-        </a>
+        </h1>
         <Cart />
       </nav>
     </header>
