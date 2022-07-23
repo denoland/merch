@@ -61,33 +61,43 @@ export default function Cart() {
     <div>
       <button
         onClick={() => ref.current!.showModal()}
-        class={tw`block relative`}
+        class={tw
+          `flex gap-2 items-center border-2 border-gray-800 rounded-full px-5 py-1 font-semibold text-gray-800 hover:bg-gray-800 hover:text-white transition-colors duration-300`}
       >
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
+          width="15"
+          height="16"
+          viewBox="0 0 15 16"
           fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
+          xmlns="http://www.w3.org/2000/svg"
         >
+          <mask id="path-1-inside-1_1601_8161" fill="white">
+            <rect
+              x="0.919922"
+              y="3.9663"
+              width="14.08"
+              height="12.0337"
+              rx="1"
+            />
+          </mask>
+          <rect
+            x="0.919922"
+            y="3.9663"
+            width="14.08"
+            height="12.0337"
+            rx="1"
+            stroke="currentColor"
+            stroke-width="3.2"
+            mask="url(#path-1-inside-1_1601_8161)"
+          />
           <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M11.5599 7.60279V3.6C11.5599 1.61177 9.94809 -3.8147e-06 7.95986 -3.8147e-06C5.97164 -3.8147e-06 4.35986 1.61177 4.35986 3.59999V7.60279H5.95986V3.59999C5.95986 2.49543 6.85529 1.6 7.95986 1.6C9.06443 1.6 9.95986 2.49543 9.95986 3.6V7.60279H11.5599Z"
+            fill="currentColor"
           />
         </svg>
-        <div
-          class={tw
-            `block absolute top-0 right-0 h-4 w-4 transform -translate-y-1/2 translate-x-1/2 rounded-full bg-red-500 flex`}
-        >
-          <div
-            class={tw
-              `h-4 w-4 text-center align-middle text-white text-[0.6rem] leading-4`}
-          >
-            {data?.lines.nodes.length}
-          </div>
-        </div>
+        Cart {data?.lines.nodes.length ?? "0"}
       </button>
       <dialog
         ref={ref}

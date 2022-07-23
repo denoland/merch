@@ -4,7 +4,7 @@ import { Fragment, h } from "preact";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { Footer } from "@/components/Footer.tsx";
 import { HeadElement } from "@/components/HeadElement.tsx";
-import { NavBar } from "@/components/NavBar.tsx";
+import { Header } from "@/components/Header.tsx";
 import ProductDetails from "@/islands/ProductDetails.tsx";
 import { graphql } from "@/utils/shopify.ts";
 import { Product } from "@/utils/types.ts";
@@ -64,7 +64,7 @@ export default function ProductPage(ctx: PageProps<Query>) {
         title={data.product.title}
         url={url}
       />
-      <NavBar />
+      <Header />
       <ProductDetails product={data.product!} />
       <Footer />
     </>

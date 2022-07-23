@@ -6,7 +6,7 @@ import { formatCurrency } from "@/utils/data.ts";
 import { graphql } from "@/utils/shopify.ts";
 import { Footer } from "@/components/Footer.tsx";
 import { HeadElement } from "@/components/HeadElement.tsx";
-import { NavBar } from "@/components/NavBar.tsx";
+import { Header } from "@/components/Header.tsx";
 import { List, Product } from "../utils/types.ts";
 
 const q = `{
@@ -57,7 +57,7 @@ export default function Home(ctx: PageProps<Data>) {
         title="Deno Merch"
         url={url}
       />
-      <NavBar />
+      <Header />
       <div
         class={tw
           `max-w-2xl mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:max-w-7xl lg:px-8`}

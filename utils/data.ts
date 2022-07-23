@@ -64,17 +64,24 @@ const CART_QUERY = `{
 async function cartFetcher(): Promise<CartData> {
   const id = localStorage.getItem("cartId");
   if (id === null) {
-    const { cartCreate } = await graphql(
-      `mutation { cartCreate { cart ${CART_QUERY} } }`,
-    );
+    const { cartCreate }: { cartCreate: { cart: CartData } } =
+      await (await fetch("/api/shopify", {
+        method: "POST",
+        body: JSON.stringify({
+          query: `mutation { cartCreate { cart ${CART_QUERY} } }`,
+        }),
+      })).json();
     localStorage.setItem("cartId", cartCreate.cart.id);
     return cartCreate.cart;
   }
 
-  const { cart } = await graphql(
-    `query($id: ID!) { cart(id: $id) ${CART_QUERY} }`,
-    { id },
-  );
+  const { cart } = await (await fetch("/api/shopify", {
+    method: "POST",
+    body: JSON.stringify({
+      query: `query($id: ID!) { cart(id: $id) ${CART_QUERY} }`,
+      variables: { id },
+    }),
+  })).json();
 
   if (cart === null) {
     // If there is a cart ID, but the returned cart is null, then the cart
