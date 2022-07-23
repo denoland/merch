@@ -103,7 +103,7 @@ function ProductCard(props: { product: Product }) {
       <div
         class={tw`${
           aspectRatio(1, 1)
-        } w-full bg-white rounded-xl overflow-hidden border-2 border-gray-200 group-hover:border-gray-300 group-hover:shadow-lg transition-all duration-500 relative`}
+        } w-full bg-white rounded-xl overflow-hidden border-2 border-gray-200 transition-all duration-500 relative`}
       >
         {product.featuredImage && (
           <img
@@ -117,13 +117,19 @@ function ProductCard(props: { product: Product }) {
         )}
         <div
           class={tw
-            `w-full h-full flex items-center justify-center bg-[rgba(255,255,255,0.6)] opacity-0 group-hover:opacity-90 transition-all duration-500`}
+            `w-full h-full flex items-center justify-center bg-[rgba(255,255,255,0.6)] opacity-0 group-hover:opacity-100 transition-all duration-500`}
         >
           <IconCart size={30} />
         </div>
       </div>
       <div class={tw`flex items-center justify-between mt-3`}>
-        <h3 class={tw`text-lg text-gray-800 font-medium`}>{product.title}</h3>
+        <h3 class={tw`text-lg text-gray-800 font-medium relative`}>
+          {product.title}
+          <span
+            class={tw
+              `bg-gray-800 h-[3px] w-0 group-hover:!w-full absolute bottom-[-2px] left-0 transition-all duration-400`}
+          />
+        </h3>
         <strong class={tw`text-lg font-bold text-gray-800`}>
           {formatCurrency(product.priceRange.minVariantPrice)}
         </strong>
