@@ -78,7 +78,7 @@ export default function Home(ctx: PageProps<Data>) {
         </h2>
       </div>
       <div
-        class={tw`w-11/12 max-w-5xl mx-auto mt-24`}
+        class={tw`w-11/12 max-w-5xl mx-auto mt-20`}
         aria-labelledby="information-heading"
       >
         <h2 id="information-heading" class={tw`sr-only`}>
@@ -86,7 +86,7 @@ export default function Home(ctx: PageProps<Data>) {
         </h2>
         <div
           class={tw
-            `grid grid-cols-1 gap-12 sm:!grid-cols-2 lg:!grid-cols-3 lg:!gap-16`}
+            `grid grid-cols-1 gap-8 sm:!gap-x-10 sm:!grid-cols-2 lg:!grid-cols-3 lg:!gap-x-12 lg:!gap-y-10`}
         >
           {products.map((product) => <ProductCard product={product} />)}
         </div>

@@ -6,7 +6,7 @@ export function Footer() {
   return (
     <footer
       class={tw
-        `w-11/12 max-w-5xl mx-auto mt-32 mb-12 flex items-center justify-between`}
+        `w-11/12 max-w-5xl mx-auto mt-24 sm:!mt-30 mb-8 flex items-center justify-between`}
     >
       <span class={tw`flex items-center gap-4`}>
         <a
@@ -26,7 +26,7 @@ export function Footer() {
         </a>
       </span>
       <a
-        class={tw`text-sm text-gray-400 flex items-center gap-2`}
+        class={tw`text-sm text-gray-400 hidden items-center gap-2 sm:!flex`}
         href="https://deno-merch.myshopify.com"
       >
         Powered by
