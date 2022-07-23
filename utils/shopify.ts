@@ -1,5 +1,9 @@
-const SHOPIFY_SHOP = "deno-merch.myshopify.com";
-const SHOPIFY_ACCESS_TOKEN = "235190bee2a33cb4da0897edb6e954de";
+const SHOPIFY_SHOP = Deno.env.get("SHOPIFY_SHOP");
+const SHOPIFY_ACCESS_TOKEN = Deno.env.get("SHOPIFY_ACCESS_TOKEN");
+
+if (SHOPIFY_SHOP === undefined || SHOPIFY_ACCESS_TOKEN === undefined) {
+  throw new Error("env `SHOPIFY_SHOP` and `SHOPIFY_ACCESS_TOKEN` must be set");
+}
 
 export async function graphql<T>(
   query: string,
@@ -9,7 +13,7 @@ export async function graphql<T>(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-Shopify-Storefront-Access-Token": SHOPIFY_ACCESS_TOKEN,
+      "X-Shopify-Storefront-Access-Token": SHOPIFY_ACCESS_TOKEN!,
     },
     body: JSON.stringify({ query, variables }),
   });
