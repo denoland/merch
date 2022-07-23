@@ -21,7 +21,7 @@ export function Header() {
           <img
             src="/logo.svg"
             alt="Deno Logo"
-            class={tw`h-12 w-12`}
+            class={tw`h-14 w-14`}
           />
         </a>
         <h1>
