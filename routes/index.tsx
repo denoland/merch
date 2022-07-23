@@ -60,7 +60,10 @@ export default function Home(ctx: PageProps<Data>) {
         url={url}
       />
       <Header />
-      <div class={tw`w-11/12 max-w-5xl mx-auto mt-24`}>
+      <div
+        class={tw
+          `w-11/12 max-w-5xl mx-auto mt-24 flex flex-col items-center text-center gap-6 sm:!items-start sm:!text-left`}
+      >
         <svg
           width="100"
           height="4"
@@ -70,13 +73,17 @@ export default function Home(ctx: PageProps<Data>) {
         >
           <line y1="2" x2="100" y2="2" stroke="#ccc" stroke-width="3" />
         </svg>
-        <h2 class={tw`text-2xl lg:!text-4xl font-medium mt-6 text-gray-800`}>
+        <h2 class={tw`text-2xl lg:!text-4xl font-medium text-gray-800`}>
           Deno's collection of Dino in the rain<br /> for you and your friends.
         </h2>
       </div>
       <div
         class={tw`w-11/12 max-w-5xl mx-auto mt-24`}
+        aria-labelledby="information-heading"
       >
+        <h2 id="information-heading" class={tw`sr-only`}>
+          Product List
+        </h2>
         <div
           class={tw
             `grid grid-cols-1 gap-12 sm:!grid-cols-2 lg:!grid-cols-3 lg:!gap-16`}

@@ -84,18 +84,18 @@ function CartInner(props: { cart: CartData | undefined }) {
   const corners = apply`rounded(tl-2xl tr-2xl sm:(tr-none bl-2xl))`;
   const card = tw
     `py-8 px-6 h-full bg-white ${corners} flex flex-col justify-between`;
-  const { data } = useCart();
-  const remove = (lineItemId: string) => {
-    const cartId = data!.id;
-
-    console.log("remove", cartId, lineItemId);
-    removeFromCart(cartId, lineItemId);
-  };
+  const { data: cart } = useCart();
 
   const checkout = (e: Event) => {
     e.preventDefault();
-    if (data) {
-      location.href = data.checkoutUrl;
+    if (cart) {
+      location.href = cart.checkoutUrl;
+    }
+  };
+
+  const remove = (itemId: string) => {
+    if (cart) {
+      removeFromCart(cart.id, itemId);
     }
   };
 
@@ -160,7 +160,7 @@ function CartInner(props: { cart: CartData | undefined }) {
                           `flex flex-1 items-end justify-between text-sm`}
                       >
                         <p class={tw`text-gray-500`}>
-                          Quantity {line.quantity}
+                          Quantity <strong>{line.quantity}</strong>
                         </p>
 
                         <div class={tw`flex`}>
@@ -193,7 +193,7 @@ function CartInner(props: { cart: CartData | undefined }) {
             <button
               type="button"
               class={tw
-                `w-full bg-gray-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-50`}
+                `w-full bg-gray-700 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-gray-700`}
               disabled={props.cart.lines.nodes.length === 0}
               onClick={checkout}
             >

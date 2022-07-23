@@ -52,6 +52,7 @@ export const handler: Handlers<Query> = {
 
 export default function ProductPage(ctx: PageProps<Query>) {
   const { data, url } = ctx;
+
   if (!data.product) {
     return <div>Product not found</div>;
   }
