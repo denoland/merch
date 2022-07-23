@@ -26,9 +26,10 @@ export function Footer() {
         </a>
       </span>
       <a
-        class={tw`text-[#F9D03F] flex items-center gap-2`}
+        class={tw`text-sm text-gray-400 flex items-center gap-2`}
         href="https://deno-merch.myshopify.com"
       >
+        Powered by
         <svg
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
@@ -54,7 +55,9 @@ export function Footer() {
           >
           </path>
         </svg>
-        Shopify
+        <span class={tw`text-gray-600`}>
+          Shopify
+        </span>
       </a>
     </footer>
   );
