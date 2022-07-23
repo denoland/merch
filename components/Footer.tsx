@@ -26,7 +26,7 @@ export function Footer() {
         </a>
       </span>
       <a
-        class={tw`text-[#F9D03F] flex items-center gap-2 text-gray-700`}
+        class={tw`text-[#F9D03F] flex items-center gap-2`}
         href="https://deno-merch.myshopify.com"
       >
         <svg
