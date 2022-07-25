@@ -1,0 +1,21 @@
+body {
+  background: #f9f9f9;
+}
+
+.rainfall {
+  background-color: transparent;
+  background-image: url("/raindrops.svg");
+  background-repeat: repeat;
+  animation-duration: 60000s;
+  animation-name: rainfall;
+}
+
+@keyframes rainfall {
+  from {
+    background-position: left 0rem top 0rem;
+  }
+
+  to {
+    background-position: left -50000rem top 100000rem;
+  }
+}

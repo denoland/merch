@@ -4,6 +4,7 @@ import { useRef } from "preact/hooks";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 import { apply, tw } from "@twind";
 import { animation, css } from "twind/css";
+import IconCart from "@/components/IconCart.tsx";
 import {
   CartData,
   formatCurrency,
@@ -53,37 +54,19 @@ export default function Cart() {
     }
   };
 
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
     <div>
       <button
         onClick={() => ref.current!.showModal()}
-        class={tw`block relative`}
+        class={tw
+          `flex items-center gap-2 items-center border-2 border-gray-800 rounded-full px-5 py-1 font-semibold text-md text-gray-800 hover:bg-gray-800 hover:text-white transition-colors duration-300`}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-          />
-        </svg>
-        <div
-          class={tw
-            `block absolute top-0 right-0 h-4 w-4 transform -translate-y-1/2 translate-x-1/2 rounded-full bg-red-500 flex`}
-        >
-          <div
-            class={tw
-              `h-4 w-4 text-center align-middle text-white text-[0.6rem] leading-4`}
-          >
-            {data?.lines.nodes.length}
-          </div>
-        </div>
+        <IconCart />
+        {data?.lines.nodes.length ?? "0"}
       </button>
       <dialog
         ref={ref}
@@ -101,18 +84,19 @@ function CartInner(props: { cart: CartData | undefined }) {
   const corners = apply`rounded(tl-2xl tr-2xl sm:(tr-none bl-2xl))`;
   const card = tw
     `py-8 px-6 h-full bg-white ${corners} flex flex-col justify-between`;
-  const { data } = useCart();
-  const remove = (lineItemId) => {
-    const cartId = data!.id;
-
-    console.log("remove", cartId, lineItemId);
-    removeFromCart(cartId, lineItemId);
-  };
+  const { data: cart } = useCart();
 
   const checkout = (e: Event) => {
     e.preventDefault();
-    console.log("checkout");
-    location.href = data.checkoutUrl;
+    if (cart) {
+      location.href = cart.checkoutUrl;
+    }
+  };
+
+  const remove = (itemId: string) => {
+    if (cart) {
+      removeFromCart(cart.id, itemId);
+    }
   };
 
   return (
@@ -142,25 +126,42 @@ function CartInner(props: { cart: CartData | undefined }) {
               <ul role="list" class={tw`-my-6 divide-y divide-gray-200`}>
                 {props.cart.lines.nodes.map((line) => (
                   <li class={tw`flex py-6`}>
-                    <div class={tw`h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200`}>
+                    <div
+                      class={tw
+                        `h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200`}
+                    >
                       <img
                         src={line.merchandise.image.url}
-                        alt={line.merchandise.image.altText ?? line.merchandise.product.title}
+                        alt={line.merchandise.image.altText ??
+                          line.merchandise.product.title}
                         class={tw`h-full w-full object-cover object-center`}
                       />
                     </div>
                     <div class={tw`ml-4 flex flex-1 flex-col`}>
                       <div>
-                        <div class={tw`flex justify-between text-base font-medium text-gray-900`}>
+                        <div
+                          class={tw
+                            `flex justify-between text-base font-medium text-gray-900`}
+                        >
                           <h3>{line.merchandise.product.title}</h3>
-                          <p class={tw`ml-4`}>{formatCurrency(line.estimatedCost.totalAmount)}</p>
+                          <p class={tw`ml-4`}>
+                            {formatCurrency(line.estimatedCost.totalAmount)}
+                          </p>
                         </div>
                         <p class={tw`mt-1 text-sm text-gray-500`}>
-                          {line.merchandise.title !== line.merchandise.product.title ? line.merchandise.title : ""}
+                          {line.merchandise.title !==
+                              line.merchandise.product.title
+                            ? line.merchandise.title
+                            : ""}
                         </p>
                       </div>
-                      <div class={tw`flex flex-1 items-end justify-between text-sm`}>
-                        <p class={tw`text-gray-500`}>Quantity {line.quantity}</p>
+                      <div
+                        class={tw
+                          `flex flex-1 items-end justify-between text-sm`}
+                      >
+                        <p class={tw`text-gray-500`}>
+                          Quantity <strong>{line.quantity}</strong>
+                        </p>
 
                         <div class={tw`flex`}>
                           <button
@@ -181,7 +182,7 @@ function CartInner(props: { cart: CartData | undefined }) {
       )}
       {props.cart && (
         <div class={tw`border-t border-gray-200 py-6 px-4 sm:px-6`}>
-          <div class={tw`flex justify-between text-base font-medium`}>
+          <div class={tw`flex justify-between text-lg font-medium`}>
             <p>Subtotal</p>
             <p>{formatCurrency(props.cart.estimatedCost.totalAmount)}</p>
           </div>
@@ -191,14 +192,18 @@ function CartInner(props: { cart: CartData | undefined }) {
           <div class={tw`mt-6`}>
             <button
               type="button"
-              class={tw`w-full bg-gray-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-50`}
+              class={tw
+                `w-full bg-gray-700 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-gray-700`}
               disabled={props.cart.lines.nodes.length === 0}
               onClick={checkout}
             >
               Checkout
             </button>
           </div>
-          <div class={tw`mt-6 flex justify-center text-center text-sm text-gray-500`}>
+          <div
+            class={tw
+              `mt-6 flex justify-center text-center text-sm text-gray-500`}
+          >
             <p>
               or&nbsp;
               <button
@@ -208,7 +213,7 @@ function CartInner(props: { cart: CartData | undefined }) {
                   (e.target as HTMLButtonElement).closest("dialog")!.close();
                 }}
               >
-                Continue Shopping<span aria-hidden="true"> &rarr;</span>
+                Continue Shopping <span aria-hidden="true">&rarr;</span>
               </button>
             </p>
           </div>

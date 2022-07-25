@@ -2,11 +2,13 @@
 import { h } from "preact";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { tw } from "@twind";
+import { aspectRatio } from "@twind/aspect-ratio";
 import { formatCurrency } from "@/utils/data.ts";
 import { graphql } from "@/utils/shopify.ts";
 import { Footer } from "@/components/Footer.tsx";
 import { HeadElement } from "@/components/HeadElement.tsx";
-import { NavBar } from "@/components/NavBar.tsx";
+import { Header } from "@/components/Header.tsx";
+import IconCart from "@/components/IconCart.tsx";
 import { List, Product } from "../utils/types.ts";
 
 const q = `{
@@ -57,16 +59,34 @@ export default function Home(ctx: PageProps<Data>) {
         title="Deno Merch"
         url={url}
       />
-      <NavBar />
+      <Header />
       <div
         class={tw
-          `max-w-2xl mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:max-w-7xl lg:px-8`}
+          `w-11/12 max-w-5xl mx-auto mt-24 flex flex-col items-center text-center gap-6 sm:!items-start sm:!text-left`}
       >
-        <h2 class={tw`sr-only`}>Products</h2>
-
+        <svg
+          width="100"
+          height="4"
+          viewBox="0 0 100 4"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <line y1="2" x2="100" y2="2" stroke="#ccc" stroke-width="3" />
+        </svg>
+        <h2 class={tw`text-xl md:!text-2xl lg:!text-3xl font-medium`}>
+          Deno's collection of Dino in the rain<br /> for you and your friends.
+        </h2>
+      </div>
+      <div
+        class={tw`w-11/12 max-w-5xl mx-auto mt-20`}
+        aria-labelledby="information-heading"
+      >
+        <h2 id="information-heading" class={tw`sr-only`}>
+          Product List
+        </h2>
         <div
           class={tw
-            `grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8`}
+            `grid grid-cols-1 gap-8 sm:!gap-x-10 sm:!grid-cols-2 lg:!grid-cols-3 lg:!gap-x-12 lg:!gap-y-10`}
         >
           {products.map((product) => <ProductCard product={product} />)}
         </div>
@@ -80,7 +100,11 @@ function ProductCard(props: { product: Product }) {
   const { product } = props;
   return (
     <a key={product.id} href={`/products/${product.handle}`} class={tw`group`}>
-      <div class={tw`w-full bg-gray-200 rounded-lg overflow-hidden`}>
+      <div
+        class={tw`${
+          aspectRatio(1, 1)
+        } w-full bg-white rounded-xl overflow-hidden border-2 border-gray-200 transition-all duration-500 relative`}
+      >
         {product.featuredImage && (
           <img
             src={product.featuredImage.url}
@@ -88,14 +112,28 @@ function ProductCard(props: { product: Product }) {
             width={product.featuredImage.width}
             height={product.featuredImage.height}
             class={tw
-              `w-full h-full object-center object-cover group-hover:opacity-75`}
+              `w-full h-full object-center object-contain absolute block`}
           />
         )}
+        <div
+          class={tw
+            `w-full h-full flex items-center justify-center bg-[rgba(255,255,255,0.6)] opacity-0 group-hover:opacity-100 transition-all duration-500`}
+        >
+          <IconCart size={30} />
+        </div>
       </div>
-      <h3 class={tw`mt-4 text-sm text-gray-700`}>{product.title}</h3>
-      <p class={tw`mt-1 text-lg font-medium text-gray-900`}>
-        {formatCurrency(product.priceRange.minVariantPrice)}
-      </p>
+      <div class={tw`flex items-center justify-between mt-3`}>
+        <h3 class={tw`text-lg text-gray-800 font-medium relative`}>
+          {product.title}
+          <span
+            class={tw
+              `bg-gray-800 h-[3px] w-0 group-hover:!w-full absolute bottom-[-2px] left-0 transition-all duration-400`}
+          />
+        </h3>
+        <strong class={tw`text-lg font-bold text-gray-800`}>
+          {formatCurrency(product.priceRange.minVariantPrice)}
+        </strong>
+      </div>
     </a>
   );
 }
