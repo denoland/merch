@@ -2,10 +2,17 @@
 import { h } from "preact";
 import { useState } from "preact/hooks";
 import { tw } from "@twind";
+import { css } from "twind/css";
 import { aspectRatio } from "@twind/aspect-ratio";
 import AddToCart from "@/islands/AddToCart.tsx";
 import { formatCurrency } from "@/utils/data.ts";
 import { Product } from "@/utils/types.ts";
+
+const descriptionStyles = css({
+  "a": {
+    color: "blue",
+  },
+});
 
 export default function ProductDetails({ product }: { product: Product }) {
   const [variant, setVariant] = useState(product.variants.nodes[0]);
@@ -60,7 +67,7 @@ export default function ProductDetails({ product }: { product: Product }) {
 
           <div class={tw`mt-4 space-y-6`}>
             <p
-              class={tw`text-base text-gray-600`}
+              class={tw`text-base text-gray-600 ${descriptionStyles}`}
               dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
             />
           </div>
