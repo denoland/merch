@@ -33,6 +33,15 @@ const q = `query ($product: String!) {
       height
       altText
     }
+
+    images(first: 10) {
+      nodes {
+        url
+        width
+        height
+        altText
+      }
+    }
   }
 }`;
 
@@ -65,6 +74,7 @@ export default function ProductPage(ctx: PageProps<Query>) {
         title={data.product.title}
         url={url}
       />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
       <Header />
       <ProductDetails product={data.product!} />
       <Footer />

@@ -16,6 +16,34 @@ const descriptionStyles = css({
 
 export default function ProductDetails({ product }: { product: Product }) {
   const [variant, setVariant] = useState(product.variants.nodes[0]);
+  let index = 0;
+
+  function changeImage(delta) {
+    index += delta;
+
+    if (index < 0) {
+      index = product.images.nodes.length - 1;
+    } else if (index >= product.images.nodes.length) {
+      index = 0;
+    }
+
+    const newImage = product.images.nodes[index];
+    const imageElement = document.querySelector("#productImage") as HTMLImageElement;
+
+    imageElement.src = newImage.url;
+
+    if (newImage.altText) {
+      imageElement.alt = newImage.altText;
+    }
+
+    if (newImage.width) {
+      imageElement.width = newImage.width;
+    }
+
+    if (newImage.height) {
+      imageElement.height = newImage.height;
+    }
+  }
 
   return (
     <div
@@ -71,15 +99,35 @@ export default function ProductDetails({ product }: { product: Product }) {
           aspectRatio(1, 1)
         } w-full bg-white rounded-xl overflow-hidden border-2 border-gray-200 mt-12 lg:mt-0 lg:col-start-2 lg:row-span-2 lg:self-start`}
       >
-        <div class={tw`rounded-lg overflow-hidden`}>
+        <div class={tw`rounded-lg overflow-hidden carousel-dark`}>
           {product.featuredImage && (
             <img
+              id="productImage"
               src={product.featuredImage.url}
               alt={product.featuredImage.altText}
               width={product.featuredImage.width}
               height={product.featuredImage.height}
               class={tw`w-full h-full object-center object-contain`}
             />
+          )}
+
+          {product?.images?.nodes?.length > 1 && (
+            <div>
+              <button
+                class={tw`carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0`}
+                type="button"
+                onClick={() => { changeImage(-1) }}
+              >
+                <span class={tw`carousel-control-prev-icon inline-block bg-no-repeat`} aria-hidden="true"></span>
+              </button>
+              <button
+                class={tw`carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0`}
+                type="button"
+                onClick={() => { changeImage(1) }}
+              >
+                <span class={tw`carousel-control-next-icon inline-block bg-no-repeat`} aria-hidden="true"></span>
+              </button>
+            </div>
           )}
         </div>
       </div>
