@@ -27,15 +27,6 @@ export default function ProductDetails({ product }: { product: Product }) {
         <div
           class={tw`flex flex-col gap-4`}
         >
-          <svg
-            width="100"
-            height="4"
-            viewBox="0 0 100 4"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <line y1="2" x2="100" y2="2" stroke="#ccc" stroke-width="3" />
-          </svg>
           <div class={tw`w-full flex items-center justify-between gap-4`}>
             <h2 class={tw`text-xl lg:!text-2xl font-semibold text-gray-800`}>
               {product.title}

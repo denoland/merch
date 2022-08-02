@@ -64,15 +64,6 @@ export default function Home(ctx: PageProps<Data>) {
         class={tw
           `w-11/12 max-w-5xl mx-auto mt-24 flex flex-col items-center text-center gap-6 sm:!items-start sm:!text-left`}
       >
-        <svg
-          width="100"
-          height="4"
-          viewBox="0 0 100 4"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <line y1="2" x2="100" y2="2" stroke="#ccc" stroke-width="3" />
-        </svg>
       </div>
       <div
         class={tw`w-11/12 max-w-5xl mx-auto mt-20`}
