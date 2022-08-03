@@ -108,7 +108,7 @@ export default function ProductDetails({ product }: { product: Product }) {
           aspectRatio(1, 1)
         } w-full bg-white rounded-xl border-2 border-gray-200 mt-12 lg:mt-0 lg:col-start-2 lg:row-span-2 lg:self-start`}
       >
-        <div class={tw`rounded-lg overflow-hidden carousel-dark`}>
+        <div class={tw`rounded-lg overflow-hidden`}>
           {product.featuredImage && (
             <img
               id="productImage"
@@ -123,7 +123,7 @@ export default function ProductDetails({ product }: { product: Product }) {
           {(product?.images?.nodes?.length ?? 0) > 1 && (
             <div>
               <button
-                class={tw`carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0`}
+                class={tw`absolute w-16 opacity-50 hover:opacity-100 top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0`}
                 type="button"
                 onClick={() => {
                   changeImage(-1);
@@ -150,7 +150,7 @@ export default function ProductDetails({ product }: { product: Product }) {
                 </span>
               </button>
               <button
-                class={tw`carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0`}
+                class={tw`absolute w-16 opacity-50 hover:opacity-100 top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0`}
                 type="button"
                 onClick={() => {
                   changeImage(1);
