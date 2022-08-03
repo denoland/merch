@@ -61,7 +61,7 @@ export default function Home(ctx: PageProps<Data>) {
       />
       <Header />
       <div
-        class={tw`w-11/12 max-w-5xl mx-auto mt-32`}
+        class={tw`w-11/12 max-w-5xl mx-auto mt-28`}
         aria-labelledby="information-heading"
       >
         <h2 id="information-heading" class={tw`sr-only`}>

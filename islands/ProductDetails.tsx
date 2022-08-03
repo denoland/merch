@@ -53,7 +53,7 @@ export default function ProductDetails({ product }: { product: Product }) {
 
   return (
     <div
-      class={tw`w-11/12 max-w-5xl mx-auto mt-16 lg:grid lg:grid-cols-2 lg:gap-x-16`}
+      class={tw`w-11/12 max-w-5xl mx-auto mt-8 lg:grid lg:grid-cols-2 lg:gap-x-16`}
     >
       {/* Product details */}
       <div>

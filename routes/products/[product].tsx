@@ -76,10 +76,7 @@ export default function ProductPage(ctx: PageProps<Query>) {
         title={data.product.title}
         url={url}
       />
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css"
-      />
+
       <Header />
       <div
         class={tw`w-11/12 mt-16 max-w-5xl mx-auto flex items-center justify-between relative`}
