@@ -10,7 +10,10 @@ import { Product } from "@/utils/types.ts";
 
 const descriptionStyles = css({
   "a": {
-    color: "blue",
+    color: "#056CF0",
+  },
+  "a:hover": {
+    textDecoration: "underline",
   },
 });
 
@@ -18,9 +21,10 @@ export default function ProductDetails({ product }: { product: Product }) {
   const [variant, setVariant] = useState(product.variants.nodes[0]);
   let index = 0;
 
-  function changeImage(delta) {
-    index += delta;
+  function changeImage(delta: number) {
+    if (!product.images) return;
 
+    index += delta;
     if (index < 0) {
       index = product.images.nodes.length - 1;
     } else if (index >= product.images.nodes.length) {
@@ -28,7 +32,9 @@ export default function ProductDetails({ product }: { product: Product }) {
     }
 
     const newImage = product.images.nodes[index];
-    const imageElement = document.querySelector("#productImage") as HTMLImageElement;
+    const imageElement = document.querySelector(
+      "#productImage",
+    ) as HTMLImageElement;
 
     imageElement.src = newImage.url;
 
@@ -47,8 +53,7 @@ export default function ProductDetails({ product }: { product: Product }) {
 
   return (
     <div
-      class={tw
-        `w-11/12 max-w-5xl mx-auto mt-24 lg:grid lg:grid-cols-2 lg:gap-x-16`}
+      class={tw`w-11/12 max-w-5xl mx-auto mt-8 lg:grid lg:grid-cols-2 lg:gap-x-16`}
     >
       {/* Product details */}
       <div>
@@ -56,12 +61,16 @@ export default function ProductDetails({ product }: { product: Product }) {
           class={tw`flex flex-col gap-4`}
         >
           <div class={tw`w-full flex items-center justify-between gap-4`}>
-            <h2 class={tw`text-xl lg:!text-2xl font-semibold text-gray-800`}>
-              {product.title}
-            </h2>
+            <hgroup>
+              <h2 class={tw`text-xl lg:!text-2xl font-semibold text-gray-800`}>
+                {product.title}
+              </h2>
+              <h3 class={tw`text-gray-500 text-base leading-tight`}>
+                {product.productType}
+              </h3>
+            </hgroup>
             <div
-              class={tw
-                `bg-[#E8E7E5] rounded-full px-6 py-2 text-lg text-gray-900 font-bold`}
+              class={tw`bg-[#E8E7E5] rounded-full px-6 py-2 text-lg text-gray-900 font-bold`}
             >
               {formatCurrency(variant.priceV2)}
             </div>
@@ -97,7 +106,7 @@ export default function ProductDetails({ product }: { product: Product }) {
       <div
         class={tw`${
           aspectRatio(1, 1)
-        } w-full bg-white rounded-xl overflow-hidden border-2 border-gray-200 mt-12 lg:mt-0 lg:col-start-2 lg:row-span-2 lg:self-start`}
+        } w-full bg-white rounded-xl border-2 border-gray-200 mt-12 lg:mt-0 lg:col-start-2 lg:row-span-2 lg:self-start`}
       >
         <div class={tw`rounded-lg overflow-hidden carousel-dark`}>
           {product.featuredImage && (
@@ -111,21 +120,61 @@ export default function ProductDetails({ product }: { product: Product }) {
             />
           )}
 
-          {product?.images?.nodes?.length > 1 && (
+          {(product?.images?.nodes?.length ?? 0) > 1 && (
             <div>
               <button
                 class={tw`carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0`}
                 type="button"
-                onClick={() => { changeImage(-1) }}
+                onClick={() => {
+                  changeImage(-1);
+                }}
               >
-                <span class={tw`carousel-control-prev-icon inline-block bg-no-repeat`} aria-hidden="true"></span>
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                  <svg
+                    aria-hidden="true"
+                    class="w-6 h-6 text-gray-800 dark:text-gray-800"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 19l-7-7 7-7"
+                    >
+                    </path>
+                  </svg>
+                  <span class="sr-only">Previous</span>
+                </span>
               </button>
               <button
                 class={tw`carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0`}
                 type="button"
-                onClick={() => { changeImage(1) }}
+                onClick={() => {
+                  changeImage(1);
+                }}
               >
-                <span class={tw`carousel-control-next-icon inline-block bg-no-repeat`} aria-hidden="true"></span>
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                  <svg
+                    aria-hidden="true"
+                    class="w-6 h-6 text-gray-800 dark:text-gray-800"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    >
+                    </path>
+                  </svg>
+                  <span class="sr-only">Next</span>
+                </span>
               </button>
             </div>
           )}
@@ -134,20 +183,17 @@ export default function ProductDetails({ product }: { product: Product }) {
 
       {/* Product form */}
       <div
-        class={tw
-          `mt-12 lg:max-w-lg lg:col-start-1 lg:row-start-2 lg:self-start`}
+        class={tw`mt-12 lg:max-w-lg lg:col-start-1 lg:row-start-2 lg:self-start`}
       >
         <section aria-labelledby="options-heading">
           {product.variants.nodes.length > 1 && (
             <div class={tw`group`}>
               <div
-                class={tw
-                  `relative p-4 flex items-center justify-between rounded-lg border-2 border-gray-300 group-hover:border-gray-400 transition-colors`}
+                class={tw`relative p-4 flex items-center justify-between rounded-lg border-2 border-gray-300 group-hover:border-gray-400 transition-colors`}
               >
                 <span>{/* space holderplace, don't remove */}</span>
                 <span
-                  class={tw
-                    `text-gray-400 group-hover:text-gray-600 transition-colors`}
+                  class={tw`text-gray-400 group-hover:text-gray-600 transition-colors`}
                 >
                   <svg
                     width="16"
@@ -177,8 +223,7 @@ export default function ProductDetails({ product }: { product: Product }) {
                     setVariant(
                       JSON.parse((e.target as HTMLSelectElement).value),
                     )}
-                  class={tw
-                    `absolute pl-4 top-0 left-0 block w-full h-full rounded-lg appearance-none bg-transparent cursor-pointer`}
+                  class={tw`absolute pl-4 top-0 left-0 block w-full h-full rounded-lg appearance-none bg-transparent cursor-pointer`}
                 >
                   {product.variants.nodes.map((variant) => {
                     return (
