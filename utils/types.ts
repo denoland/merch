@@ -25,7 +25,9 @@ export interface Product {
   title: string;
   description: string;
   descriptionHtml: string;
+  productType: string;
   featuredImage: Image | null;
+  images?: List<Image>;
   variants: List<ProductVariant>;
   priceRange: ProductPriceRange;
 }

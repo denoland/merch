@@ -61,20 +61,14 @@ export default function Home(ctx: PageProps<Data>) {
       />
       <Header />
       <div
-        class={tw
-          `w-11/12 max-w-5xl mx-auto mt-24 flex flex-col items-center text-center gap-6 sm:!items-start sm:!text-left`}
-      >
-      </div>
-      <div
-        class={tw`w-11/12 max-w-5xl mx-auto mt-20`}
+        class={tw`w-11/12 max-w-5xl mx-auto mt-32`}
         aria-labelledby="information-heading"
       >
         <h2 id="information-heading" class={tw`sr-only`}>
           Product List
         </h2>
         <div
-          class={tw
-            `grid grid-cols-1 gap-8 sm:!gap-x-10 sm:!grid-cols-2 lg:!grid-cols-3 lg:!gap-x-12 lg:!gap-y-10`}
+          class={tw`grid grid-cols-1 gap-8 sm:!gap-x-10 sm:!grid-cols-2 lg:!grid-cols-3 lg:!gap-x-12 lg:!gap-y-10`}
         >
           {products.map((product) => <ProductCard product={product} />)}
         </div>
@@ -99,13 +93,11 @@ function ProductCard(props: { product: Product }) {
             alt={product.featuredImage.altText}
             width={product.featuredImage.width}
             height={product.featuredImage.height}
-            class={tw
-              `w-full h-full object-center object-contain absolute block`}
+            class={tw`w-full h-full object-center object-contain absolute block`}
           />
         )}
         <div
-          class={tw
-            `w-full h-full flex items-center justify-center bg-[rgba(255,255,255,0.6)] opacity-0 group-hover:opacity-100 transition-all duration-500`}
+          class={tw`w-full h-full flex items-center justify-center bg-[rgba(255,255,255,0.6)] opacity-0 group-hover:opacity-100 transition-all duration-500`}
         >
           <IconCart size={30} />
         </div>
@@ -114,8 +106,7 @@ function ProductCard(props: { product: Product }) {
         <h3 class={tw`text-lg text-gray-800 font-medium relative`}>
           {product.title}
           <span
-            class={tw
-              `bg-gray-800 h-[3px] w-0 group-hover:!w-full absolute bottom-[-2px] left-0 transition-all duration-400`}
+            class={tw`bg-gray-800 h-[3px] w-0 group-hover:!w-full absolute bottom-[-2px] left-0 transition-all duration-400`}
           />
         </h3>
         <strong class={tw`text-lg font-bold text-gray-800`}>

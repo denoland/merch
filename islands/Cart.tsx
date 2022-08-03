@@ -62,16 +62,14 @@ export default function Cart() {
     <div>
       <button
         onClick={() => ref.current!.showModal()}
-        class={tw
-          `flex items-center gap-2 items-center border-2 border-gray-800 rounded-full px-5 py-1 font-semibold text-md text-gray-800 hover:bg-gray-800 hover:text-white transition-colors duration-300`}
+        class={tw`flex items-center gap-2 items-center border-2 border-gray-800 rounded-full px-5 py-1 font-semibold text-gray-800 hover:bg-gray-800 hover:text-white transition-colors duration-300`}
       >
         <IconCart />
         {data?.lines.nodes.length ?? "0"}
       </button>
       <dialog
         ref={ref}
-        class={tw
-          `bg-transparent p-0 m-0 pt-[50%] sm:pt-0 sm:ml-auto max-w-full sm:max-w-lg w-full max-h-full h-full ${slideBottom} sm:${slideRight} ${backdrop}`}
+        class={tw`bg-transparent p-0 m-0 pt-[50%] sm:pt-0 sm:ml-auto max-w-full sm:max-w-lg w-full max-h-full h-full ${slideBottom} sm:${slideRight} ${backdrop}`}
         onClick={onDialogClick}
       >
         <CartInner cart={data} />
@@ -82,8 +80,8 @@ export default function Cart() {
 
 function CartInner(props: { cart: CartData | undefined }) {
   const corners = apply`rounded(tl-2xl tr-2xl sm:(tr-none bl-2xl))`;
-  const card = tw
-    `py-8 px-6 h-full bg-white ${corners} flex flex-col justify-between`;
+  const card =
+    tw`py-8 px-6 h-full bg-white ${corners} flex flex-col justify-between`;
   const { data: cart } = useCart();
 
   const checkout = (e: Event) => {
@@ -127,8 +125,7 @@ function CartInner(props: { cart: CartData | undefined }) {
                 {props.cart.lines.nodes.map((line) => (
                   <li class={tw`flex py-6`}>
                     <div
-                      class={tw
-                        `h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200`}
+                      class={tw`h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200`}
                     >
                       <img
                         src={line.merchandise.image.url}
@@ -140,8 +137,7 @@ function CartInner(props: { cart: CartData | undefined }) {
                     <div class={tw`ml-4 flex flex-1 flex-col`}>
                       <div>
                         <div
-                          class={tw
-                            `flex justify-between text-base font-medium text-gray-900`}
+                          class={tw`flex justify-between text-base font-medium text-gray-900`}
                         >
                           <h3>{line.merchandise.product.title}</h3>
                           <p class={tw`ml-4`}>
@@ -156,8 +152,7 @@ function CartInner(props: { cart: CartData | undefined }) {
                         </p>
                       </div>
                       <div
-                        class={tw
-                          `flex flex-1 items-end justify-between text-sm`}
+                        class={tw`flex flex-1 items-end justify-between text-sm`}
                       >
                         <p class={tw`text-gray-500`}>
                           Quantity <strong>{line.quantity}</strong>
@@ -192,8 +187,7 @@ function CartInner(props: { cart: CartData | undefined }) {
           <div class={tw`mt-6`}>
             <button
               type="button"
-              class={tw
-                `w-full bg-gray-700 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-gray-700`}
+              class={tw`w-full bg-gray-700 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-gray-700`}
               disabled={props.cart.lines.nodes.length === 0}
               onClick={checkout}
             >
@@ -201,8 +195,7 @@ function CartInner(props: { cart: CartData | undefined }) {
             </button>
           </div>
           <div
-            class={tw
-              `mt-6 flex justify-center text-center text-sm text-gray-500`}
+            class={tw`mt-6 flex justify-center text-center text-sm text-gray-500`}
           >
             <p>
               or&nbsp;
