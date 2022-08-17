@@ -27,6 +27,8 @@ export function Header() {
             src="/text_logo.svg"
             alt="Deno Merch"
             class={tw`h-6`}
+            width="130"
+            height="24"
           />
         </h1>
         <Cart />

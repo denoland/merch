@@ -30,7 +30,7 @@ const q = `query ($product: String!) {
     }
 
     featuredImage {
-      url
+      url(transform: {preferredContentType: WEBP, maxWidth:400, maxHeight:400})
       width
       height
       altText
@@ -38,7 +38,7 @@ const q = `query ($product: String!) {
 
     images(first: 10) {
       nodes {
-        url
+        url(transform: {preferredContentType: WEBP, maxWidth:400, maxHeight:400})
         width
         height
         altText

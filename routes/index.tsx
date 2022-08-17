@@ -18,7 +18,7 @@ const q = `{
       handle
       title
       featuredImage {
-        url
+        url(transform: {preferredContentType: WEBP, maxWidth:400, maxHeight:400})
         width
         height
         altText
