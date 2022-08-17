@@ -114,8 +114,8 @@ export default function ProductDetails({ product }: { product: Product }) {
               id="productImage"
               src={product.featuredImage.url}
               alt={product.featuredImage.altText}
-              width={product.featuredImage.width}
-              height={product.featuredImage.height}
+              width="400"
+              height="400"
               class={tw`w-full h-full object-center object-contain`}
             />
           )}

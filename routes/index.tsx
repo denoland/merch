@@ -19,8 +19,6 @@ const q = `{
       title
       featuredImage {
         url(transform: {preferredContentType: WEBP, maxWidth:400, maxHeight:400})
-        width
-        height
         altText
       }
       priceRange {
@@ -91,8 +89,8 @@ function ProductCard(props: { product: Product }) {
           <img
             src={product.featuredImage.url}
             alt={product.featuredImage.altText}
-            width={product.featuredImage.width}
-            height={product.featuredImage.height}
+            width="400"
+            height="400"
             class={tw`w-full h-full object-center object-contain absolute block`}
           />
         )}
