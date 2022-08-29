@@ -1,6 +1,7 @@
 /** @jsx h */
 import { h } from "preact";
 import { tw } from "@twind";
+import GitHub from "./IconGithub.tsx";
 
 export function Footer() {
   return (
@@ -12,15 +13,19 @@ export function Footer() {
           class={tw`flex items-center gap-2 text-gray-700`}
           href="https://fresh.deno.dev"
         >
-          <img
-            src="/fresh_logo.svg"
-            alt="Fresh Logo"
-            class={tw`h-7 w-7`}
-          />
-          Built with <strong>Fresh</strong>
+          <a href="https://fresh.deno.dev">
+            <img
+              width="197"
+              height="37"
+              src="https://fresh.deno.dev/fresh-badge.svg"
+            />
+          </a>
         </a>
-        <span class={tw`text-gray-300 text-sm`}>|</span>
-        <a class={tw`hover:underline`} href="https://github.com/denoland/merch">
+        <a
+          class={tw`hover:underline flex gap-2 items-center`}
+          href="https://github.com/denoland/merch"
+        >
+          <GitHub class={tw`h-5 w-5 text-gray-500`} />
           Source
         </a>
       </span>
