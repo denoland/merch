@@ -1,11 +1,7 @@
-/** @jsx h */
-import { h } from "preact";
-import { tw } from "@twind";
-
 export default function GitHub(props: { class?: string }) {
   return (
     <svg
-      class={tw(props.class ?? "")}
+      class={props.class}
       width="14"
       height="14"
       viewBox="0 0 14 14"

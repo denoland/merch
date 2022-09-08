@@ -1,8 +1,6 @@
-/** @jsx h */
-import { h } from "preact";
 import { useRef } from "preact/hooks";
 import { IS_BROWSER } from "$fresh/runtime.ts";
-import { apply, tw } from "@twind";
+import { apply, tw } from "twind";
 import { animation, css } from "twind/css";
 import IconCart from "@/components/IconCart.tsx";
 import {
@@ -62,7 +60,7 @@ export default function Cart() {
     <div>
       <button
         onClick={() => ref.current!.showModal()}
-        class={tw`flex items-center gap-2 items-center border-2 border-gray-800 rounded-full px-5 py-1 font-semibold text-gray-800 hover:bg-gray-800 hover:text-white transition-colors duration-300`}
+        class="flex items-center gap-2 items-center border-2 border-gray-800 rounded-full px-5 py-1 font-semibold text-gray-800 hover:bg-gray-800 hover:text-white transition-colors duration-300"
       >
         <IconCart />
         {data?.lines.nodes.length ?? "0"}
@@ -79,9 +77,9 @@ export default function Cart() {
 }
 
 function CartInner(props: { cart: CartData | undefined }) {
-  const corners = apply`rounded(tl-2xl tr-2xl sm:(tr-none bl-2xl))`;
+  const corners = "rounded(tl-2xl tr-2xl sm:(tr-none bl-2xl))";
   const card =
-    tw`py-8 px-6 h-full bg-white ${corners} flex flex-col justify-between`;
+    `py-8 px-6 h-full bg-white ${corners} flex flex-col justify-between`;
   const { data: cart } = useCart();
 
   const checkout = (e: Event) => {
@@ -99,16 +97,16 @@ function CartInner(props: { cart: CartData | undefined }) {
 
   return (
     <div class={card}>
-      <div class={tw`flex justify-between`}>
-        <h2 class={tw`text-lg font-medium text-gray-900`}>Shopping Cart</h2>
+      <div class="flex justify-between">
+        <h2 class="text-lg font-medium text-gray-900">Shopping Cart</h2>
         <button
-          class={tw`py-1`}
+          class="py-1"
           onClick={(e) => {
             (e.target as HTMLButtonElement).closest("dialog")!.close();
           }}
         >
           <svg
-            class={tw`w-6 h-6 fill-current text-gray-600`}
+            class="w-6 h-6 fill-current text-gray-600"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -117,51 +115,45 @@ function CartInner(props: { cart: CartData | undefined }) {
         </button>
       </div>
       {props.cart && (
-        <div class={tw`flex-grow-1 my-4`}>
+        <div class="flex-grow-1 my-4">
           {props.cart.lines.nodes.length === 0
-            ? <p class={tw`text-gray-700`}>There are no items in the cart.</p>
+            ? <p class="text-gray-700">There are no items in the cart.</p>
             : (
-              <ul role="list" class={tw`-my-6 divide-y divide-gray-200`}>
+              <ul role="list" class="-my-6 divide-y divide-gray-200">
                 {props.cart.lines.nodes.map((line) => (
-                  <li class={tw`flex py-6`}>
-                    <div
-                      class={tw`h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200`}
-                    >
+                  <li class="flex py-6">
+                    <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                       <img
                         src={line.merchandise.image.url}
                         alt={line.merchandise.image.altText ??
                           line.merchandise.product.title}
-                        class={tw`h-full w-full object-cover object-center`}
+                        class="h-full w-full object-cover object-center"
                       />
                     </div>
-                    <div class={tw`ml-4 flex flex-1 flex-col`}>
+                    <div class="ml-4 flex flex-1 flex-col">
                       <div>
-                        <div
-                          class={tw`flex justify-between text-base font-medium text-gray-900`}
-                        >
+                        <div class="flex justify-between text-base font-medium text-gray-900">
                           <h3>{line.merchandise.product.title}</h3>
-                          <p class={tw`ml-4`}>
+                          <p class="ml-4">
                             {formatCurrency(line.estimatedCost.totalAmount)}
                           </p>
                         </div>
-                        <p class={tw`mt-1 text-sm text-gray-500`}>
+                        <p class="mt-1 text-sm text-gray-500">
                           {line.merchandise.title !==
                               line.merchandise.product.title
                             ? line.merchandise.title
                             : ""}
                         </p>
                       </div>
-                      <div
-                        class={tw`flex flex-1 items-end justify-between text-sm`}
-                      >
-                        <p class={tw`text-gray-500`}>
+                      <div class="flex flex-1 items-end justify-between text-sm">
+                        <p class="text-gray-500">
                           Quantity <strong>{line.quantity}</strong>
                         </p>
 
-                        <div class={tw`flex`}>
+                        <div class="flex">
                           <button
                             type="button"
-                            class={tw`font-medium`}
+                            class="font-medium"
                             onClick={() => remove(line.id)}
                           >
                             Remove
@@ -176,32 +168,30 @@ function CartInner(props: { cart: CartData | undefined }) {
         </div>
       )}
       {props.cart && (
-        <div class={tw`border-t border-gray-200 py-6 px-4 sm:px-6`}>
-          <div class={tw`flex justify-between text-lg font-medium`}>
+        <div class="border-t border-gray-200 py-6 px-4 sm:px-6">
+          <div class="flex justify-between text-lg font-medium">
             <p>Subtotal</p>
             <p>{formatCurrency(props.cart.estimatedCost.totalAmount)}</p>
           </div>
-          <p class={tw`mt-0.5 text-sm text-gray-500`}>
+          <p class="mt-0.5 text-sm text-gray-500">
             Shipping and taxes calculated at checkout.
           </p>
-          <div class={tw`mt-6`}>
+          <div class="mt-6">
             <button
               type="button"
-              class={tw`w-full bg-gray-700 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-gray-700`}
+              class="w-full bg-gray-700 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-gray-700"
               disabled={props.cart.lines.nodes.length === 0}
               onClick={checkout}
             >
               Checkout
             </button>
           </div>
-          <div
-            class={tw`mt-6 flex justify-center text-center text-sm text-gray-500`}
-          >
+          <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
             <p>
               or&nbsp;
               <button
                 type="button"
-                class={tw`font-medium`}
+                class="font-medium"
                 onClick={(e) => {
                   (e.target as HTMLButtonElement).closest("dialog")!.close();
                 }}

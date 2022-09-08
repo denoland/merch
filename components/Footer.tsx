@@ -1,16 +1,13 @@
-/** @jsx h */
-import { h } from "preact";
-import { tw } from "@twind";
 import GitHub from "./IconGithub.tsx";
 
 export function Footer() {
   return (
     <footer
-      class={tw`w-11/12 max-w-5xl mx-auto mt-24 sm:!mt-28 mb-8 flex items-center justify-between`}
+      class="w-11/12 max-w-5xl mx-auto mt-24 sm:!mt-28 mb-8 flex items-center justify-between"
     >
-      <span class={tw`flex items-center gap-4`}>
+      <span class="flex items-center gap-4">
         <a
-          class={tw`flex items-center gap-2 text-gray-700`}
+          class="flex items-center gap-2 text-gray-700"
           href="https://fresh.deno.dev"
         >
           <a href="https://fresh.deno.dev">
@@ -22,15 +19,15 @@ export function Footer() {
           </a>
         </a>
         <a
-          class={tw`hover:underline flex gap-2 items-center`}
+          class="hover:underline flex gap-2 items-center"
           href="https://github.com/denoland/merch"
         >
-          <GitHub class={tw`h-5 w-5 text-gray-500`} />
+          <GitHub class="h-5 w-5 text-gray-500" />
           Source
         </a>
       </span>
       <a
-        class={tw`text-sm text-gray-400 hidden items-center gap-2 sm:!flex`}
+        class="text-sm text-gray-400 hidden items-center gap-2 sm:!flex"
         href="https://deno-merch.myshopify.com"
       >
         Powered by
@@ -59,7 +56,7 @@ export function Footer() {
           >
           </path>
         </svg>
-        <span class={tw`text-gray-600`}>
+        <span class="text-gray-600">
           Shopify
         </span>
       </a>

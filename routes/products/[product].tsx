@@ -1,8 +1,4 @@
-/** @jsx h */
-/** @jsxFrag Fragment */
-import { Fragment, h } from "preact";
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { tw } from "@twind";
 import { Footer } from "@/components/Footer.tsx";
 import { HeadElement } from "@/components/HeadElement.tsx";
 import { Header } from "@/components/Header.tsx";
@@ -79,11 +75,11 @@ export default function ProductPage(ctx: PageProps<Query>) {
 
       <Header />
       <div
-        class={tw`w-11/12 mt-16 max-w-5xl mx-auto flex items-center justify-between relative`}
+        class="w-11/12 mt-16 max-w-5xl mx-auto flex items-center justify-between relative"
       >
         <a
           href="/"
-          class={tw`flex items-center gap-2 text-gray-400 hover:text-gray-800 transition-colors duration-200`}
+          class="flex items-center gap-2 text-gray-400 hover:text-gray-800 transition-colors duration-200"
         >
           <svg
             width="16"

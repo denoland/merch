@@ -1,9 +1,8 @@
-import { IS_BROWSER } from "$fresh/runtime.ts";
-import { setup, ThemeConfiguration } from "twind";
+import { Options } from "$fresh/plugins/twind.ts";
 import * as colors from "twind/colors";
 
-export * from "twind";
-export const theme: ThemeConfiguration = {
+export default {
+  selfURL: import.meta.url,
   colors: {
     black: colors.black,
     gray: colors.gray,
@@ -16,8 +15,4 @@ export const theme: ThemeConfiguration = {
       18: "4.5rem",
     },
   },
-};
-
-if (IS_BROWSER) {
-  setup({ theme });
-}
+} as Options;
