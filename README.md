@@ -19,7 +19,7 @@ The Deno shop! Built with [Deno](https://deno.land/) and
 ## Shopify Configuration Guide
 
 - Create a new account or use an existing one. https://accounts.shopify.com/store-login
-- Create a new app. https://<yourshopname>.myshopify.com/admin/settings/apps
+- Create a new app. https://\<yourshopname>.myshopify.com/admin/settings/apps
 - Once your app has been created, select use it. Then select "Storefront API integration" link
 - Next, check Storefront API access scopes
   - `unauthenticated_read_product_listings` access should be fine to get you started. 
