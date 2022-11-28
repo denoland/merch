@@ -1,16 +1,16 @@
 {
   "imports": {
     "@/": "./",
-    "@twind/aspect-ratio": "https://esm.sh/@twind/aspect-ratio@0.1.4",
+    "@twind/aspect-ratio": "https://esm.sh/v98/@twind/aspect-ratio@0.1.4",
     "$fresh/": "https://deno.land/x/fresh@1.1.0/",
-    "preact": "https://esm.sh/preact@10.10.6",
-    "preact/": "https://esm.sh/preact@10.10.6/",
-    "preact-render-to-string": "https://esm.sh/*preact-render-to-string@5.2.3",
-    "@preact/signals": "https://esm.sh/*@preact/signals@1.0.3",
-    "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.0.1",
-    "twind": "https://esm.sh/twind@0.16.17",
-    "twind/": "https://esm.sh/twind@0.16.17/",
+    "preact": "https://esm.sh/v98/preact@10.10.6",
+    "preact/": "https://esm.sh/v98/preact@10.10.6/",
+    "preact-render-to-string": "https://esm.sh/v98/*preact-render-to-string@5.2.3",
+    "@preact/signals": "https://esm.sh/v98/*@preact/signals@1.0.3",
+    "@preact/signals-core": "https://esm.sh/v98/*@preact/signals-core@1.0.1",
+    "twind": "https://esm.sh/v98/twind@0.16.17",
+    "twind/": "https://esm.sh/v98/twind@0.16.17/",
     "$std/": "https://deno.land/std@0.154.0/",
-    "swr": "https://esm.sh/swr@2.0.0-beta.6?alias=react:preact/compat&external=preact/compat"
+    "swr": "https://esm.sh/v98/swr@2.0.0-beta.6?alias=react:preact/compat&external=preact/compat"
   }
 }
