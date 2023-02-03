@@ -28,7 +28,7 @@ export function Footer() {
       </span>
       <a
         class="text-sm text-gray-400 hidden items-center gap-2 sm:!flex"
-        href="https://deno-merch.myshopify.com"
+        href="https://merch.deno.com/"
       >
         Powered by
         <svg
