@@ -98,7 +98,7 @@ async function cartFetcher(): Promise<CartData> {
 }
 
 export function useCart() {
-  return useSWR<CartData, Error>("cart", cartFetcher, { keepPreviousData: true });
+  return useSWR<CartData, Error>("cart", cartFetcher, {});
 }
 
 const ADD_TO_CART_QUERY =
