@@ -10,7 +10,7 @@ import IconCart from "@/components/IconCart.tsx";
 import { List, Product } from "../utils/types.ts";
 
 const q = `{
-  products(first: 10) {
+  products(first: 20) {
     nodes {
       id
       handle
