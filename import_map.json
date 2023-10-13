@@ -2,7 +2,7 @@
   "imports": {
     "@/": "./",
     "@twind/aspect-ratio": "https://esm.sh/v98/@twind/aspect-ratio@0.1.4",
-    "$fresh/": "https://deno.land/x/fresh@1.1.0/",
+    "$fresh/": "https://deno.land/x/fresh@1.3.0/",
     "preact": "https://esm.sh/v98/preact@10.10.6",
     "preact/": "https://esm.sh/v98/preact@10.10.6/",
     "preact-render-to-string": "https://esm.sh/v98/*preact-render-to-string@5.2.3",
