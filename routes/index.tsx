@@ -4,6 +4,12 @@ import { HeadElement } from "@/components/HeadElement.tsx";
 import { Header } from "@/components/Header.tsx";
 import ProductDetails from "@/islands/ProductDetails.tsx";
 import { Handlers } from "$fresh/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.4";
+
+const supabase = createClient(
+  Deno.env.get("SUPABASE_URL")!,
+  Deno.env.get("SUPABASE_ANON_KEY")!
+);
 
 export const handler: Handlers = {
   async GET(req, ctx) {
@@ -15,10 +21,16 @@ export const handler: Handlers = {
     console.log({ email });
 
     // Add email to list.
+    const { data, error } = await supabase.rpc("update_claimed", {
+      email_input: email,
+    });
+    console.log(data, error);
 
     // Redirect user to thank you page.
     const headers = new Headers();
-    headers.set("location", "/thanks");
+    data
+      ? headers.set("location", "/thanks")
+      : headers.set("location", "/not-found");
     return new Response(null, {
       status: 303, // See Other
       headers,
