@@ -7,8 +7,8 @@ import { Handlers } from "$fresh/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.4";
 
 const supabase = createClient(
-  Deno.env.get("SUPABASE_URL") ?? "",
-  Deno.env.get("SUPABASE_ANON_KEY") ?? ""
+  Deno.env.get("SUPABASE_URL") ?? "http://localhost:54321",
+  Deno.env.get("SUPABASE_ANON_KEY") ?? "oiwughfiowuhdoifwg"
 );
 
 export const handler: Handlers = {
