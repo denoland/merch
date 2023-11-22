@@ -5,13 +5,19 @@
       "path": "./"
     },
     {
-      "name": "supabase-functions",
-      "path": "supabase/functions"
+      "name": "app",
+      "path": "app"
+    },
+    {
+      "name": "supabase",
+      "path": "supabase"
     }
   ],
   "settings": {
     "files.exclude": {
-      "supabase/functions/": true
-    }
+      "app/": true,
+      "supabase/": true
+    },
+    "deno.importMap": "./import_map.json"
   }
 }
