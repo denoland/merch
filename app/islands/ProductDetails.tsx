@@ -1,18 +1,26 @@
-import { tw } from "twind";
-import { css } from "twind/css";
-import { aspectRatio } from "@twind/aspect-ratio";
-import EmailForm from "@/islands/EmailForm.tsx";
+import { tw } from 'twind'
+import { css } from 'twind/css'
+import { aspectRatio } from '@twind/aspect-ratio'
+import EmailForm from '@/islands/EmailForm.tsx'
 
 const descriptionStyles = css({
   a: {
-    color: "#056CF0",
+    color: '#056CF0',
   },
-  "a:hover": {
-    textDecoration: "underline",
+  'a:hover': {
+    textDecoration: 'underline',
   },
-});
+})
 
-export default function ProductDetails() {
+export default function ProductDetails({
+  title,
+  description,
+  image,
+}: {
+  title: string
+  description: string
+  image: string
+}) {
   return (
     <div class="w-11/12 max-w-5xl mx-auto mt-8 lg:grid lg:grid-cols-2 lg:gap-x-16">
       {/* Product details */}
@@ -21,7 +29,7 @@ export default function ProductDetails() {
           <div class="w-full flex items-center justify-between gap-4">
             <hgroup>
               <h2 class="text-xl lg:!text-2xl font-semibold text-gray-800">
-                T Shirt (Dark mode)
+                {title}
               </h2>
             </hgroup>
             <div class="bg-[#E8E7E5] rounded-full px-6 py-2 text-lg text-gray-900 font-bold">
@@ -40,8 +48,7 @@ export default function ProductDetails() {
 
           <div class="mt-4 space-y-6">
             <p class={tw`text-base text-gray-600 ${descriptionStyles}`}>
-              SupaCharge your closet with Supabase T Shirts. Made of comfortable
-              cotton.
+              {description}
             </p>
           </div>
         </section>
@@ -58,8 +65,8 @@ export default function ProductDetails() {
           {
             <img
               id="productImage"
-              src="https://supabase.store/cdn/shop/products/tshirt_6fab2a57-963b-41bb-9ba5-0982128f2919_2048x2048.png?v=1696844402"
-              alt="The classic Supa Shirt"
+              src={image}
+              alt={title}
               width="400"
               height="400"
               class="w-full h-full object-center object-contain"
@@ -71,5 +78,5 @@ export default function ProductDetails() {
       {/* Email form */}
       <EmailForm />
     </div>
-  );
+  )
 }

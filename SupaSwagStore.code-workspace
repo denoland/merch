@@ -18,6 +18,6 @@
       "app/": true,
       "supabase/": true
     },
-    "deno.importMap": "./import_map.json"
+    "deno.importMap": "./app/import_map.json"
   }
 }

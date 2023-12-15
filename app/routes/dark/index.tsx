@@ -39,10 +39,11 @@ export const handler: Handlers = {
 }
 
 const props = {
-  description: 'What happened to Launch Week 9?!',
+  title: 'T Shirt (Dark mode)',
+  description:
+    'SupaCharge your closet with Supabase T Shirts. Made of comfortable cotton.',
   image:
-    'https://supabase.store/cdn/shop/files/swag-store-shirt_940x.jpg?v=1702015624',
-  title: 'LWX Dark Mode Tee',
+    'https://supabase.store/cdn/shop/products/tshirt_6fab2a57-963b-41bb-9ba5-0982128f2919_2048x2048.png?v=1696844402',
 }
 
 export default function ProductPage(ctx: PageProps) {

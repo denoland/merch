@@ -2,56 +2,57 @@
 // https://deno.land/manual/getting_started/setup_your_environment
 // This enables autocomplete, go to definition, etc.
 
-import { Database } from "../_shared/db_types.ts";
+import { Database } from '../_shared/db_types.ts'
 
-type Record = Database["public"]["Tables"]["supaswagcodes"]["Row"];
+type Record = Database['public']['Tables']['supaswagcodes']['Row']
 interface WebhookPayload {
-  type: "INSERT" | "UPDATE" | "DELETE";
-  table: string;
-  record: Record;
-  schema: "public";
-  old_record: null | Record;
+  type: 'INSERT' | 'UPDATE' | 'DELETE'
+  table: string
+  record: Record
+  schema: 'public'
+  old_record: null | Record
 }
 
-const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
 
 Deno.serve(async (req) => {
-  const payload: WebhookPayload = await req.json();
+  const payload: WebhookPayload = await req.json()
 
-  if (!payload.record.claimed) return new Response("ok");
+  if (!payload.record.claimed) return new Response('ok')
 
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${RESEND_API_KEY}`,
     },
     body: JSON.stringify({
-      from: "thorwebdev <noreply@email.thor.bio>",
+      from: 'thorwebdev <noreply@email.thor.bio>',
       to: payload.record.email,
-      subject: "Supabase SWAG incoming!!!!",
+      subject: 'Supabase LWX SWAG incoming!!!!',
       html: `
-      Hey, thanks for attending the Supabase meetup!
+      <p>Hey, thanks for attending the Supabase LWX meetup!</p>
 
-      </br></br>You can use discount code <strong>${payload.record.swag_code}</strong> to reedem one <a href="https://supabase.store/products/tshirt">dark mode shirt</a>.
+      <p>You can use discount code <strong>${payload.record.swag_code}</strong> to reedem one <a href="https://supabase.store/products/supalaunchweekx-dark-mode-tee">LWX dark mode shirt</a>.</p>
 
-      </br></br>If you have any questions or want to stay in touch, you can follow me on <a href="https://twitter.com/thorwebdev">Twitter: @thorwebdev</a>.
+      <p>Furthermore, the amazing <a href="https://www.linkedin.com/in/ratul-saha-4b693429/">Ratul</a> is graciously providing a lifetime free discount code <strong>SupaLaunchWeekX</strong> for his <a href="https://modernfullstack.com/course/mfs401">Modern Fullstack Course</a>!</p>
 
-      </br></br>Thanks, best,
-      </br>Thor
+      <p>If you have any questions or want to stay in touch, you can follow me on <a href="https://twitter.com/thorwebdev">Twitter: @thorwebdev</a>.</p>
+
+      <p>Thanks, best,<br>Thor</p>
     `,
     }),
-  });
+  })
 
-  const data = await res.json();
+  const data = await res.json()
 
   return new Response(JSON.stringify(data), {
     status: 200,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-  });
-});
+  })
+})
 
 // To invoke:
 // curl -i --location --request POST 'http://127.0.0.1:54321/functions/v1/' \
