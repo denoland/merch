@@ -135,7 +135,7 @@ function CartInner(props: { cart: CartData | undefined }) {
                         <div class="flex justify-between text-base font-medium text-gray-900">
                           <h3>{line.merchandise.product.title}</h3>
                           <p class="ml-4">
-                            {formatCurrency(line.estimatedCost.totalAmount)}
+                            {formatCurrency(line.cost.totalAmount)}
                           </p>
                         </div>
                         <p class="mt-1 text-sm text-gray-500">
@@ -171,7 +171,7 @@ function CartInner(props: { cart: CartData | undefined }) {
         <div class="border-t border-gray-200 py-6 px-4 sm:px-6">
           <div class="flex justify-between text-lg font-medium">
             <p>Subtotal</p>
-            <p>{formatCurrency(props.cart.estimatedCost.totalAmount)}</p>
+            <p>{formatCurrency(props.cart.cost.totalAmount)}</p>
           </div>
           <p class="mt-0.5 text-sm text-gray-500">
             Shipping and taxes calculated at checkout.

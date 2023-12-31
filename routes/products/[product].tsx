@@ -18,7 +18,7 @@ const q = `query ($product: String!) {
         id
         title
         availableForSale
-        priceV2 {
+        price {
           amount
           currencyCode
         }

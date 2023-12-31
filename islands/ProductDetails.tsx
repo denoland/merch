@@ -64,7 +64,7 @@ export default function ProductDetails({ product }: { product: Product }) {
               </h3>
             </hgroup>
             <div class="bg-[#E8E7E5] rounded-full px-6 py-2 text-lg text-gray-900 font-bold">
-              {formatCurrency(variant.priceV2)}
+              {formatCurrency(variant.price)}
             </div>
           </div>
         </div>

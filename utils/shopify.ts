@@ -11,7 +11,7 @@ export async function graphql<T>(
   query: string,
   variables: Record<string, unknown> = {},
 ): Promise<T> {
-  const resp = await fetch(`https://${SHOPIFY_SHOP}/api/2022-04/graphql.json`, {
+  const resp = await fetch(`https://${SHOPIFY_SHOP}/api/2023-10/graphql.json`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
