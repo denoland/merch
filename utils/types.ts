@@ -34,7 +34,7 @@ export interface Product {
 
 export interface ProductVariant {
   id: string;
-  priceV2: Money;
+  price: Money;
   title: string;
   availableForSale: boolean;
 }

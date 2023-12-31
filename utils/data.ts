@@ -14,13 +14,13 @@ export interface CartData {
         title: string;
         image: Image;
       };
-      estimatedCost: {
+      cost: {
         totalAmount: Money;
       };
     }[];
   };
   checkoutUrl: string;
-  estimatedCost: {
+  cost: {
     totalAmount: Money;
   };
 }
@@ -43,7 +43,7 @@ const CART_QUERY = `{
           }
         }
       }
-      estimatedCost {
+      cost {
         totalAmount {
           amount
           currencyCode
@@ -52,7 +52,7 @@ const CART_QUERY = `{
     }
   }
   checkoutUrl
-  estimatedCost {
+  cost {
     totalAmount {
       amount
       currencyCode
