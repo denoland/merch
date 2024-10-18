@@ -1,10 +1,10 @@
 {
-  "lock": false,
+  "lock": true,
   "tasks": {
     "check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
     "cli": "echo \"import '\\$fresh/src/dev/cli.ts'\" | deno run --unstable -A -",
     "manifest": "deno task cli manifest $(pwd)",
-    "start": "deno run -A --watch=static/,routes/ --import-map=deno.json dev.ts",
+    "start": "deno run -A --watch=static/,routes/ dev.ts",
     "build": "deno run -A dev.ts build",
     "preview": "deno run -A main.ts",
     "update": "deno run -A -r https://fresh.deno.dev/update ."
@@ -28,26 +28,24 @@
     "old/*"
   ],
   "imports": {
-    "$fresh/": "https://deno.land/x/fresh@1.7.2/",
-    "preact": "https://esm.sh/preact@10.22.0",
-    "preact/": "https://esm.sh/preact@10.22.0/",
-    "@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
-    "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.1",
+    "$fresh/": "https://deno.land/x/fresh@1.7.3/",
+    "preact": "npm:preact@10.24.3",
+    "preact/jsx-runtime": "npm:preact@10.24.3/jsx-runtime",
+    "@preact/signals": "npm:@preact/signals@1.2.2",
+    "@preact/signals-core": "npm:@preact/signals-core@1.5.1",
+    "react": "npm:preact@10.24.3/compat",
+    "react-dom": "npm:preact@10.24.3/compat",
     "tailwindcss": "npm:tailwindcss@3.4.1",
-    "tailwindcss/": "npm:/tailwindcss@3.4.1/",
     "tailwindcss/plugin": "npm:/tailwindcss@3.4.1/plugin.js",
     "$std/": "https://deno.land/std@0.216.0/",
-    "swr": "https://esm.sh/v98/swr@1.3.0?alias=react:preact/compat&external=preact/compat",
+    "swr": "https://esm.sh/v98/swr@1.3.0?external=react,react-dom",
     "@/": "./",
 
-    "@headlessui/react": "https://esm.sh/*@headlessui/react@2.1.10?external=react,react-dom&alias=@types/react:preact/compat",
-    "@floating-ui/react": "https://esm.sh/@floating-ui/react@latest?alias=react:preact/compat,react-dom:preact/compat",
-    "@tanstack/react-virtual": "https://esm.sh/@tanstack/react-virtual@latest?alias=react:preact/compat,react-dom:preact/compat",
-    "@react-aria/interactions": "https://esm.sh/@react-aria/interactions@latest?alias=react:preact/compat,react-dom:preact/compat",
-    "@react-aria/focus": "https://esm.sh/@react-aria/focus@latest?alias=react:preact/compat,react-dom:preact/compat",
-    "preact/hooks": "https://esm.sh/preact@10.24.3/hooks",
-    "react": "https://esm.sh/preact@10.24.3/compat",
-    "react-dom": "https://esm.sh/preact@10.24.3/compat"
+    "@headlessui/react": "https://esm.sh/*@headlessui/react@2.1.10?external=react,react-dom",
+    "@floating-ui/react": "https://esm.sh/@floating-ui/react@latest?external=react,react-dom",
+    "@tanstack/react-virtual": "https://esm.sh/@tanstack/react-virtual@latest?external=react,react-dom",
+    "@react-aria/interactions": "https://esm.sh/@react-aria/interactions@latest?external=react,react-dom",
+    "@react-aria/focus": "https://esm.sh/@react-aria/focus@latest?external=react,react-dom"
   },
   "compilerOptions": {
     "jsx": "react-jsx",
